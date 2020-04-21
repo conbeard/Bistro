@@ -2,6 +2,7 @@
 // Created by Connor Beard on 4/20/20.
 //
 
+#include "bpch.h"
 #include "Log.h"
 
 namespace Bistro {

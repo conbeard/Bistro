@@ -30,11 +30,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/Bis
 
 # Language standard
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+target_precompile_headers(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/bpch.h")
 
 find_package(spdlog REQUIRED)
 
 # Link libraries (e.g. logging)
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME} PRIVATE
         spdlog::spdlog
         # ${CMAKE_THREAD_LIBS_INIT}     # Needed for unix builds to link to pthread
         # LOGGING

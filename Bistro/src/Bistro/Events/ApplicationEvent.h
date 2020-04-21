@@ -5,10 +5,8 @@
 #ifndef BISTRO_APPLICATIONEVENT_H
 #define BISTRO_APPLICATIONEVENT_H
 
+#include "bpch.h"
 #include "Event.h"
-#include <string>
-#include <sstream>
-#include <iostream>
 
 namespace Bistro {
 

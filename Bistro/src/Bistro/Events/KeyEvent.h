@@ -5,6 +5,7 @@
 #ifndef BISTRO_KEYEVENT_H
 #define BISTRO_KEYEVENT_H
 
+#include "bpch.h"
 #include "Event.h"
 
 namespace Bistro {

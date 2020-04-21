@@ -12,7 +12,7 @@ public:
     }
 
     ~Sandbox() override {
-        std::cout << "example destructor\n";
+        B_INFO("Sandbox Destructor!");
     }
 };
 

@@ -1,11 +1,10 @@
 //
 // Created by Connor Beard on 4/20/20.
 //
-
-#include <iostream>
+#include "bpch.h"
 #include "Application.h"
 
-#include "Events/ApplicationEvent.h"
+#include "Events/MouseEvent.h"
 #include "Log.h"
 
 namespace Bistro {
@@ -14,7 +13,7 @@ namespace Bistro {
     Application::~Application() = default;
 
     void Application::Run() {
-        WindowResizeEvent e(720, 360);
+        MouseMovedEvent e(720, 360);
         B_LOGGER_TRACE(e);
 
         B_LOGGER_INFO("Running...");

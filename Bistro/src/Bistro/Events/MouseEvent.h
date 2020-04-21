@@ -5,6 +5,7 @@
 #ifndef BISTRO_MOUSEEVENT_H
 #define BISTRO_MOUSEEVENT_H
 
+#include "bpch.h"
 #include "Event.h"
 
 namespace Bistro {

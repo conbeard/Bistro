@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "hicpp-signed-bitwise"
 //
 // Created by Connor Beard on 4/21/20.
 //
@@ -5,6 +7,7 @@
 #ifndef BISTRO_EVENT_H
 #define BISTRO_EVENT_H
 
+#include "bpch.h"
 #include "Bistro/Core.h"
 
 namespace Bistro {
@@ -76,3 +79,5 @@ namespace Bistro {
 }
 
 #endif //BISTRO_EVENT_H
+
+#pragma clang diagnostic pop
