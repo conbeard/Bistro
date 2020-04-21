@@ -3,7 +3,20 @@
 //
 
 #include <Bistro.h>
+#include <iostream>
 
-int main() {
-    Bistro::hello();
+class Sandbox : public Bistro::Application {
+public:
+    Sandbox() {
+        auto logger = Bistro::Log::GetClientLogger();
+        logger->info("Sandbox Init");
+    }
+
+    ~Sandbox() override {
+        std::cout << "example destructor\n";
+    }
+};
+
+Bistro::Application* Bistro::CreateApplication() {
+    return new Sandbox();
 }

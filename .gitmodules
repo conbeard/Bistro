@@ -1,0 +1,3 @@
+[submodule "Bistro/vendor/spdlog"]
+	path = Bistro/vendor/spdlog
+	url = https://github.com/gabime/spdlog

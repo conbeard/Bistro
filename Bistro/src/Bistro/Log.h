@@ -6,7 +6,8 @@
 #define BISTRO_LOG_H
 
 #include "Core.h"
-
+#include "spdlog/spdlog.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace Bistro {
     class  Log {
