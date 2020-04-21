@@ -33,10 +33,12 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 target_precompile_headers(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/bpch.h")
 
 find_package(spdlog REQUIRED)
+find_package(glfw3 REQUIRED)
 
 # Link libraries (e.g. logging)
 target_link_libraries(${PROJECT_NAME} PRIVATE
         spdlog::spdlog
+        glfw
         # ${CMAKE_THREAD_LIBS_INIT}     # Needed for unix builds to link to pthread
         # LOGGING
 )
