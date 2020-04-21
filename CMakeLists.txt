@@ -7,6 +7,6 @@ option(BISTRO_BUILD_SANDBOX "Build sandbox application" ON)
 
 add_subdirectory(Bistro)
 
-#if (BISTRO_BUILD_SANDBOX)
+if (BISTRO_BUILD_SANDBOX)
     add_subdirectory(Sandbox)
-#endif ()
+endif ()
