@@ -11,8 +11,7 @@ extern Bistro::Application* Bistro::CreateApplication();
 
 int main(int argc, char** argv) {
     Bistro::Log::Init();
-    auto logger = Bistro::Log::GetBistroLogger();
-    logger->info("Welcome to Bistro");
+    B_LOGGER_INFO("Welcome to Bistro!");
 
     auto app = Bistro::CreateApplication();
     app->Run();

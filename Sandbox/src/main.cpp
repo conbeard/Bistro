@@ -8,8 +8,7 @@
 class Sandbox : public Bistro::Application {
 public:
     Sandbox() {
-        auto logger = Bistro::Log::GetClientLogger();
-        logger->info("Sandbox Init");
+        B_INFO("Sandbox Init!");
     }
 
     ~Sandbox() override {
