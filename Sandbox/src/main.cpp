@@ -3,7 +3,7 @@
 //
 
 #include <Bistro.h>
-#include <iostream>
+#include <Bistro/EntryPoint.h>
 
 class Sandbox : public Bistro::Application {
 public:

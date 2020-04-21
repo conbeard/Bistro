@@ -3,7 +3,9 @@ project(bistro-engine)
 # Add Sources
 set(BISTRO_SOURCES
         src/Bistro/Application.cpp
-        src/Bistro/Log.cpp)
+        src/Bistro/Log.cpp
+        src/Platform/MacOS/MacWindow.cpp
+)
 
 add_library(${PROJECT_NAME} SHARED ${BISTRO_SOURCES})
 add_library(Bistro::Engine ALIAS ${PROJECT_NAME})
@@ -30,16 +32,15 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/Bis
 
 # Language standard
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+# Precompiled Headers
 target_precompile_headers(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/bpch.h")
 
 find_package(spdlog REQUIRED)
 find_package(glfw3 REQUIRED)
 
 # Link libraries (e.g. logging)
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME}
         spdlog::spdlog
         glfw
-        # ${CMAKE_THREAD_LIBS_INIT}     # Needed for unix builds to link to pthread
-        # LOGGING
 )
 

@@ -16,4 +16,8 @@
 #include "Bistro/Events/KeyEvent.h"
 #include "Bistro/Events/MouseEvent.h"
 
+// Window
+#include "Bistro/Window.h"
+#include "Platform/MacOS/MacWindow.h"
+
 #endif //BISTRO_BISTRO_H

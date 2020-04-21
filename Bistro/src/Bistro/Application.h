@@ -5,14 +5,20 @@
 #ifndef BISTRO_APPLICATION_H
 #define BISTRO_APPLICATION_H
 
+#include "bpch.h"
 #include "Core.h"
+#include "Window.h"
 
 namespace Bistro {
     class Application {
         public:
             Application();
             virtual ~Application();
-            static void Run();
+            void Run();
+
+    private:
+        std::unique_ptr<Window> m_window;
+        bool m_running = true;
     };
 
     // To be implemented in client

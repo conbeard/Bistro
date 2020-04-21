@@ -3,25 +3,19 @@
 //
 #include "bpch.h"
 #include "Application.h"
-
-#include "Events/MouseEvent.h"
 #include "Log.h"
 
 namespace Bistro {
-    Application::Application() = default;
+    Application::Application() {
+        m_window = std::unique_ptr<Window>(Window::create());
+    }
 
     Application::~Application() = default;
 
     void Application::Run() {
-        MouseMovedEvent e(720, 360);
-        B_LOGGER_TRACE(e);
 
-        B_LOGGER_INFO("Running...");
-        while (true) {
-            char input = '\0';
-            std::cin >> input;
-            if (input == 'q') break;
+        while (m_running) {
+            m_window->onUpdate();
         }
-        B_LOGGER_CRITICAL("Finishing...");
     }
 }

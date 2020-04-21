@@ -10,6 +10,7 @@
 #include <utility>
 #include <algorithm>
 #include <functional>
+#include <csignal>
 
 #include <string>
 #include <sstream>

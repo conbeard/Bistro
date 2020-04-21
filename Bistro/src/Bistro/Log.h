@@ -24,11 +24,11 @@ namespace Bistro {
     };
 }
 
-#define B_LOGGER_TRACE(...) ::Bistro::Log::GetBistroLogger()->trace(__VA_ARGS__)
-#define B_LOGGER_INFO(...)  ::Bistro::Log::GetBistroLogger()->info(__VA_ARGS__)
-#define B_LOGGER_WARN(...)  ::Bistro::Log::GetBistroLogger()->warn(__VA_ARGS__)
-#define B_LOGGER_ERROR(...) ::Bistro::Log::GetBistroLogger()->error(__VA_ARGS__)
-#define B_LOGGER_CRITICAL(...) ::Bistro::Log::GetBistroLogger()->critical(__VA_ARGS__)
+#define B_CORE_TRACE(...) ::Bistro::Log::GetBistroLogger()->trace(__VA_ARGS__)
+#define B_CORE_INFO(...)  ::Bistro::Log::GetBistroLogger()->info(__VA_ARGS__)
+#define B_CORE_WARN(...)  ::Bistro::Log::GetBistroLogger()->warn(__VA_ARGS__)
+#define B_CORE_ERROR(...) ::Bistro::Log::GetBistroLogger()->error(__VA_ARGS__)
+#define B_CORE_CRITICAL(...) ::Bistro::Log::GetBistroLogger()->critical(__VA_ARGS__)
 
 
 #define B_TRACE(...) ::Bistro::Log::GetClientLogger()->trace(__VA_ARGS__)
