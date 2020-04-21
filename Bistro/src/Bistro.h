@@ -10,4 +10,10 @@
 
 #include "Bistro/EntryPoint.h"
 
+// Events
+#include "Bistro//Events/Event.h"
+#include "Bistro//Events/ApplicationEvent.h"
+#include "Bistro//Events/KeyEvent.h"
+#include "Bistro//Events/MouseEvent.h"
+
 #endif //BISTRO_BISTRO_H

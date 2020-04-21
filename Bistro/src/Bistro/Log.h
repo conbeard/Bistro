@@ -8,6 +8,7 @@
 #include "Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/fmt/ostr.h"
 
 namespace Bistro {
     class  Log {
@@ -27,13 +28,13 @@ namespace Bistro {
 #define B_LOGGER_INFO(...)  ::Bistro::Log::GetBistroLogger()->info(__VA_ARGS__)
 #define B_LOGGER_WARN(...)  ::Bistro::Log::GetBistroLogger()->warn(__VA_ARGS__)
 #define B_LOGGER_ERROR(...) ::Bistro::Log::GetBistroLogger()->error(__VA_ARGS__)
-#define B_LOGGER_FATAL(...) ::Bistro::Log::GetBistroLogger()->fatal(__VA_ARGS__)
+#define B_LOGGER_CRITICAL(...) ::Bistro::Log::GetBistroLogger()->critical(__VA_ARGS__)
 
 
 #define B_TRACE(...) ::Bistro::Log::GetClientLogger()->trace(__VA_ARGS__)
 #define B_INFO(...)  ::Bistro::Log::GetClientLogger()->info(__VA_ARGS__)
 #define B_WARN(...)  ::Bistro::Log::GetClientLogger()->warn(__VA_ARGS__)
 #define B_ERROR(...) ::Bistro::Log::GetClientLogger()->error(__VA_ARGS__)
-#define B_FATAL(...) ::Bistro::Log::GetClientLogger()->fatal(__VA_ARGS__)
+#define B_CRITICAL(...) ::Bistro::Log::GetClientLogger()->critical(__VA_ARGS__)
 
 #endif //BISTRO_LOG_H

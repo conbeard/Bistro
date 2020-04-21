@@ -5,18 +5,24 @@
 #include <iostream>
 #include "Application.h"
 
+#include "Events/ApplicationEvent.h"
+#include "Log.h"
+
 namespace Bistro {
     Application::Application() = default;
 
     Application::~Application() = default;
 
     void Application::Run() {
-        std::cout << "Running...\n";
+        WindowResizeEvent e(720, 360);
+        B_LOGGER_TRACE(e);
+
+        B_LOGGER_INFO("Running...");
         while (true) {
             char input = '\0';
             std::cin >> input;
             if (input == 'q') break;
         }
-        std::cout << "Finishing...\n";
+        B_LOGGER_CRITICAL("Finishing...");
     }
 }
