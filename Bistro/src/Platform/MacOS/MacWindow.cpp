@@ -11,6 +11,8 @@
 #include "Bistro/Events/MouseEvent.h"
 #include "Bistro/Events/ApplicationEvent.h"
 
+#include <glad/glad.h>
+
 namespace Bistro {
 
     static bool s_GLFWInitialized = false;
@@ -54,6 +56,9 @@ namespace Bistro {
         );
 
         glfwMakeContextCurrent(m_window);
+        int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+        B_CORE_ASSERT(status, "Failed to Initialize Glad")
+
         glfwSetWindowUserPointer(m_window, &m_data);
         setVSync(true);
 
