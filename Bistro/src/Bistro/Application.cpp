@@ -5,7 +5,7 @@
 #include "Application.h"
 #include "Log.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace Bistro {
 
@@ -19,9 +19,13 @@ namespace Bistro {
     Application::~Application() = default;
 
     void Application::Run() {
-        B_CORE_ASSERT(true, "Test")
-
         while (m_running) {
+            glClearColor(1, 0, 1, 1);
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            for (Layer* layer : m_layerStack)
+                layer->onUpdate();
+
             m_window->onUpdate();
         }
     }
@@ -32,6 +36,19 @@ namespace Bistro {
         dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
 
         B_CORE_TRACE("{0}", e);
+
+        for (auto it = m_layerStack.end(); it != m_layerStack.begin(); ) {
+            (*--it)->onEvent(e);
+            if (e.handled) break;
+        }
+    }
+
+    void Application::pushLayer(Layer *layer) {
+        m_layerStack.pushLayer(layer);
+    }
+
+    void Application::pushOverlay(Layer *overlay) {
+        m_layerStack.pushOverlay(overlay);
     }
 
     bool Application::onWindowClose(WindowCloseEvent) {

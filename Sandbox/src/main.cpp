@@ -4,10 +4,23 @@
 
 #include <Bistro.h>
 
+class ExampleLayer : public Bistro::Layer {
+public:
+    ExampleLayer() : Layer("Example") {}
+
+    void onUpdate() override {
+//        B_TRACE("Example Layer Update");
+    }
+
+    void onEvent(Bistro::Event& e) override {
+        B_TRACE("{0}", e);
+    }
+};
+
 class Sandbox : public Bistro::Application {
 public:
     Sandbox() {
-        B_INFO("Sandbox Init!");
+        pushLayer(new ExampleLayer());
     }
 
     ~Sandbox() override {

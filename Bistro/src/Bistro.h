@@ -5,19 +5,12 @@
 #ifndef BISTRO_BISTRO_H
 #define BISTRO_BISTRO_H
 
+#include "Bistro/Core.h"
+
 #include "Bistro/Application.h"
+#include "Bistro/Layer.h"
 #include "Bistro/Log.h"
 
 #include "Bistro/EntryPoint.h"
-
-// Events
-#include "Bistro/Events/Event.h"
-#include "Bistro/Events/ApplicationEvent.h"
-#include "Bistro/Events/KeyEvent.h"
-#include "Bistro/Events/MouseEvent.h"
-
-// Window
-#include "Bistro/Window.h"
-#include "Platform/MacOS/MacWindow.h"
 
 #endif //BISTRO_BISTRO_H

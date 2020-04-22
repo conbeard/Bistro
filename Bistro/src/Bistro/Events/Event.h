@@ -37,8 +37,9 @@ namespace Bistro {
 #define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
 
     class Event {
-    friend class EventDispatcher;
     public:
+        bool handled = false;
+
         virtual EventType getEventType() const  = 0;
         virtual const char* getName() const = 0;
         virtual int getCategoryFlags() const  = 0;
@@ -47,9 +48,6 @@ namespace Bistro {
         inline bool isInCategory(EventCategory category) {
             return getCategoryFlags() & category;
         }
-
-    protected:
-        bool m_isHandled = false;
     };
 
 
@@ -62,7 +60,7 @@ namespace Bistro {
         template<typename T>
         bool dispatch(EventFn<T> func) {
             if (m_event.getEventType() == T::getStaticType()) {
-                m_event.m_isHandled = func(*(T*)&m_event);
+                m_event.handled = func(*(T*)&m_event);
                 return true;
             }
             return false;

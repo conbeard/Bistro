@@ -4,6 +4,8 @@ project(bistro-engine)
 set(BISTRO_SOURCES
         src/Bistro/Application.cpp
         src/Bistro/Log.cpp
+        src/Bistro/Layer.cpp
+        src/Bistro/LayerStack.cpp
         src/Platform/MacOS/MacWindow.cpp
 )
 
@@ -26,6 +28,8 @@ if(UNIX AND NOT APPLE)
     target_compile_definitions(${PROJECT_NAME} PUBLIC B_PLATFORM_UNIX=1)
 endif()
 
+target_compile_definitions(${PROJECT_NAME} PUBLIC GLFW_INCLUDE_NONE)
+
 # Set include directories
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/Bistro)
@@ -37,10 +41,12 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/bpc
 
 find_package(spdlog REQUIRED)
 find_package(glfw3 REQUIRED)
+add_subdirectory(vendor/glad)
 
 # Link libraries (e.g. logging)
 target_link_libraries(${PROJECT_NAME}
         spdlog::spdlog
         glfw
+        glad
 )
 
