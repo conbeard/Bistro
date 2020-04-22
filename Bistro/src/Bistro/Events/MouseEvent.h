@@ -76,6 +76,7 @@ namespace Bistro {
 
 
     class MouseScrolledEvent : public Event {
+    public:
         MouseScrolledEvent(float xOffset, float yOffset)
                 : m_xOffset(xOffset), m_yOffset(yOffset) {}
 

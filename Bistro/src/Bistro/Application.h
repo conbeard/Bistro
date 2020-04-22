@@ -8,6 +8,7 @@
 #include "bpch.h"
 #include "Core.h"
 #include "Window.h"
+#include "Events/ApplicationEvent.h"
 
 namespace Bistro {
     class Application {
@@ -16,7 +17,11 @@ namespace Bistro {
             virtual ~Application();
             void Run();
 
+            void onEvent(Event& e);
+
     private:
+        bool onWindowClose(WindowCloseEvent);
+
         std::unique_ptr<Window> m_window;
         bool m_running = true;
     };
