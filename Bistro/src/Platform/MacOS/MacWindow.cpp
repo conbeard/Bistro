@@ -45,6 +45,11 @@ namespace Bistro {
             B_CORE_ASSERT(success, "Could not initialize GLFW!");
 
             glfwSetErrorCallback(GLFWErrorCallback);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
             s_GLFWInitialized = true;
         }
 
@@ -93,6 +98,14 @@ namespace Bistro {
                 KeyPressedEvent event(keyCode, 1);
                 data.callback(event);
             }
+        });
+
+        glfwSetCharCallback(m_window, [](GLFWwindow* window, unsigned int keycode)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            KeyTypedEvent event(keycode);
+            data.callback(event);
         });
 
         glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mods) {

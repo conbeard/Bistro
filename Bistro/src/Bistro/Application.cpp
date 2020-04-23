@@ -4,23 +4,27 @@
 #include "bpch.h"
 #include "Application.h"
 #include "Log.h"
+#include "Core.h"
 
 #include <glad/glad.h>
 
 namespace Bistro {
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+    Application* Application::s_instance = nullptr;
 
     Application::Application() {
+        B_CORE_ASSERT(!s_instance, "Application already exists!");
+        s_instance = this;
+
         m_window = std::unique_ptr<Window>(Window::create());
-        m_window->setEventCallback(BIND_EVENT_FN(onEvent));
+        m_window->setEventCallback(BIND_EVENT_FN(Application::onEvent));
     }
 
     Application::~Application() = default;
 
     void Application::Run() {
         while (m_running) {
-            glClearColor(1, 0, 1, 1);
+            glClearColor(0.4, 1, 1, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
             for (Layer* layer : m_layerStack)
@@ -33,9 +37,7 @@ namespace Bistro {
     void Application::onEvent(Event &e) {
         EventDispatcher dispatcher(e);
 
-        dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
-
-        B_CORE_TRACE("{0}", e);
+        dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::onWindowClose));
 
         for (auto it = m_layerStack.end(); it != m_layerStack.begin(); ) {
             (*--it)->onEvent(e);
@@ -45,10 +47,12 @@ namespace Bistro {
 
     void Application::pushLayer(Layer *layer) {
         m_layerStack.pushLayer(layer);
+        layer->onAttach();
     }
 
     void Application::pushOverlay(Layer *overlay) {
         m_layerStack.pushOverlay(overlay);
+        overlay->onAttach();
     }
 
     bool Application::onWindowClose(WindowCloseEvent) {

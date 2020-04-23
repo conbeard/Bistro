@@ -4,3 +4,6 @@
 [submodule "Bistro/vendor/glfw"]
 	path = Bistro/vendor/glfw
 	url = https://github.com/glfw/glfw
+[submodule "Bistro/vendor/imgui"]
+	path = Bistro/vendor/imgui
+	url = https://github.com/conbeard/imgui

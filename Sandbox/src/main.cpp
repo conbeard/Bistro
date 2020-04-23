@@ -13,7 +13,7 @@ public:
     }
 
     void onEvent(Bistro::Event& e) override {
-        B_TRACE("{0}", e);
+//        B_TRACE("{0}", e);
     }
 };
 
@@ -21,6 +21,7 @@ class Sandbox : public Bistro::Application {
 public:
     Sandbox() {
         pushLayer(new ExampleLayer());
+        pushOverlay(new Bistro::ImGuiLayer());
     }
 
     ~Sandbox() override {

@@ -11,6 +11,8 @@
 #include "Bistro/Layer.h"
 #include "Bistro/Log.h"
 
+#include "Bistro/ImGui/ImGuiLayer.h"
+
 #include "Bistro/EntryPoint.h"
 
 #endif //BISTRO_BISTRO_H

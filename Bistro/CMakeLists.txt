@@ -6,7 +6,9 @@ set(BISTRO_SOURCES
         src/Bistro/Log.cpp
         src/Bistro/Layer.cpp
         src/Bistro/LayerStack.cpp
+        src/Bistro/ImGui/ImGuiLayer.cpp
         src/Platform/MacOS/MacWindow.cpp
+        src/Platform/OpenGL/imgui_impl_opengl3.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${BISTRO_SOURCES})
@@ -42,11 +44,13 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/bpc
 find_package(spdlog REQUIRED)
 find_package(glfw3 REQUIRED)
 add_subdirectory(vendor/glad)
+add_subdirectory(vendor/imgui)
 
 # Link libraries (e.g. logging)
 target_link_libraries(${PROJECT_NAME}
         spdlog::spdlog
         glfw
         glad
+        imgui
 )
 
