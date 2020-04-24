@@ -9,6 +9,7 @@
 #include "Core.h"
 
 #include "Window.h"
+#include "Input.h"
 #include "Layer.h"
 #include "LayerStack.h"
 #include "Events/ApplicationEvent.h"

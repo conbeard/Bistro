@@ -7,6 +7,7 @@ set(BISTRO_SOURCES
         src/Bistro/Layer.cpp
         src/Bistro/LayerStack.cpp
         src/Bistro/ImGui/ImGuiLayer.cpp
+        src/Platform/MacOS/MacInput.cpp
         src/Platform/MacOS/MacWindow.cpp
         src/Platform/OpenGL/imgui_impl_opengl3.cpp
 )

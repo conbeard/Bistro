@@ -8,6 +8,7 @@
 #include "Bistro/Core.h"
 
 #include "Bistro/Application.h"
+#include "Bistro/Input.h"
 #include "Bistro/Layer.h"
 #include "Bistro/Log.h"
 

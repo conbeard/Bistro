@@ -23,6 +23,8 @@ namespace Bistro {
         inline void setEventCallback(const EventCallbackFn& callback) override { m_data.callback = callback; }
         void setVSync(bool enabled) override;
         bool isVSync() const override;
+
+        inline virtual void* getNativeWindow() const override { return m_window; }
     private:
         virtual void init(const WindowProps& props);
         virtual void shutdown();
