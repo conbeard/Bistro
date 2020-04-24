@@ -9,6 +9,8 @@ public:
     ExampleLayer() : Layer("Example") {}
 
     void onUpdate() override {
+        if (Bistro::Input::isKeyPressed(B_KEY_T))
+            B_INFO("Q has been pressed");
 //        B_TRACE("Example Layer Update");
     }
 
