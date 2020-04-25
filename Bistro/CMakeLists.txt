@@ -10,6 +10,7 @@ set(BISTRO_SOURCES
         src/Bistro/ImGui/ImGuiBuild.cpp
         src/Platform/MacOS/MacInput.cpp
         src/Platform/MacOS/MacWindow.cpp
+        src/Platform/OpenGL/OpenGLContext.cpp
         )
 
 add_library(${PROJECT_NAME} SHARED ${BISTRO_SOURCES})

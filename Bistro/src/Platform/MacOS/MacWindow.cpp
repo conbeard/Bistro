@@ -11,7 +11,7 @@
 #include "Bistro/Events/MouseEvent.h"
 #include "Bistro/Events/ApplicationEvent.h"
 
-#include <glad/glad.h>
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Bistro {
 
@@ -22,7 +22,7 @@ namespace Bistro {
     }
 
     Window* Window::create(const WindowProps& props) {
-        return new MacWindow(props);
+        return (Window*) new MacWindow(props);
     }
 
     MacWindow::MacWindow(const WindowProps &props) {
@@ -48,7 +48,7 @@ namespace Bistro {
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
 
             s_GLFWInitialized = true;
         }
@@ -60,9 +60,8 @@ namespace Bistro {
             nullptr, nullptr
         );
 
-        glfwMakeContextCurrent(m_window);
-        int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-        B_CORE_ASSERT(status, "Failed to Initialize Glad")
+        m_context = new OpenGLContext(m_window);
+        m_context->init();
 
         glfwSetWindowUserPointer(m_window, &m_data);
         setVSync(true);
@@ -142,7 +141,7 @@ namespace Bistro {
 
     void MacWindow::onUpdate() {
         glfwPollEvents();
-        glfwSwapBuffers(m_window);
+        m_context->swapBuffers();
     }
 
     void MacWindow::setVSync(bool enabled) {

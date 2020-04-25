@@ -6,6 +6,8 @@
 #define BISTRO_MACWINDOW_H
 
 #include "Bistro/Window.h"
+#include "Bistro/Renderer/GraphicsContext.h"
+
 #include <GLFW/glfw3.h>
 
 namespace Bistro {
@@ -30,6 +32,8 @@ namespace Bistro {
         virtual void shutdown();
 
         GLFWwindow* m_window;
+        GraphicsContext* m_context;
+
         struct WindowData {
             std::string title;
             unsigned int width, height;
