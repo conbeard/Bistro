@@ -22,6 +22,11 @@ namespace Bistro {
         glfwMakeContextCurrent(m_windowHandle);
         int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
         B_CORE_ASSERT(status, "Failed to Initialize Glad");
+
+        B_CORE_INFO("OpenGL Info:");
+        B_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
+        B_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
+        B_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
     }
 
     void OpenGLContext::swapBuffers() {
