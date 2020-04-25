@@ -8,6 +8,7 @@ set(BISTRO_SOURCES
         src/Bistro/LayerStack.cpp
         src/Bistro/ImGui/ImGuiLayer.cpp
         src/Bistro/ImGui/ImGuiBuild.cpp
+        src/Bistro/Renderer/Shader.cpp
         src/Platform/MacOS/MacInput.cpp
         src/Platform/MacOS/MacWindow.cpp
         src/Platform/OpenGL/OpenGLContext.cpp

@@ -14,6 +14,7 @@
 #include "Bistro/ImGui/ImGuiLayer.h"
 #include "LayerStack.h"
 #include "Events/ApplicationEvent.h"
+#include "Bistro/Renderer/Shader.h"
 
 namespace Bistro {
     class Application {
@@ -38,6 +39,8 @@ namespace Bistro {
         LayerStack m_layerStack;
 
         unsigned int m_vertexArray, m_vertexBuffer, m_indexBuffer;
+
+        std::unique_ptr<Shader> m_shader;
 
         static Application* s_instance;
     };
