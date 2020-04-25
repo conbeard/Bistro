@@ -17,23 +17,13 @@ namespace Bistro {
         ImGuiLayer();
         ~ImGuiLayer();
 
-        void onAttach();
-        void onDetach();
-        void onUpdate();
-        void onEvent(Event& event);
+        virtual void onAttach() override;
+        virtual void onDetach() override;
+        virtual void onImGuiRender() override;
 
+        void begin();
+        void end();
     private:
-        bool onMouseButtonPressed(MouseButtonPressedEvent& event);
-        bool onMouseButtonReleased(MouseButtonReleasedEvent& event);
-        bool onMouseMoved(MouseMovedEvent& event);
-        bool onMouseScrolled(MouseScrolledEvent& event);
-
-        bool onKeyPressed(KeyPressedEvent& event);
-        bool onKeyReleased(KeyReleasedEvent& event);
-        bool onKeyTyped(KeyTypedEvent& event);
-
-        bool onWindowResize(WindowResizeEvent& event);
-
         float m_time = 0.0f;
     };
 

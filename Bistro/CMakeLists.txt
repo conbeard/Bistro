@@ -7,10 +7,10 @@ set(BISTRO_SOURCES
         src/Bistro/Layer.cpp
         src/Bistro/LayerStack.cpp
         src/Bistro/ImGui/ImGuiLayer.cpp
+        src/Bistro/ImGui/ImGuiBuild.cpp
         src/Platform/MacOS/MacInput.cpp
         src/Platform/MacOS/MacWindow.cpp
-        src/Platform/OpenGL/imgui_impl_opengl3.cpp
-)
+        )
 
 add_library(${PROJECT_NAME} SHARED ${BISTRO_SOURCES})
 add_library(Bistro::Engine ALIAS ${PROJECT_NAME})
@@ -46,6 +46,7 @@ find_package(spdlog REQUIRED)
 find_package(glfw3 REQUIRED)
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/imgui)
+add_subdirectory(vendor/glm REQUIRED)
 
 # Link libraries (e.g. logging)
 target_link_libraries(${PROJECT_NAME}
@@ -53,5 +54,6 @@ target_link_libraries(${PROJECT_NAME}
         glfw
         glad
         imgui
+        glm
 )
 

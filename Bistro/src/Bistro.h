@@ -13,6 +13,7 @@
 #include "Bistro/Log.h"
 
 #include "Bistro/KeyCodes.h"
+#include "Bistro/MouseButtonCodes.h"
 
 #include "Bistro/ImGui/ImGuiLayer.h"
 

@@ -11,6 +11,7 @@
 #include "Window.h"
 #include "Input.h"
 #include "Layer.h"
+#include "Bistro/ImGui/ImGuiLayer.h"
 #include "LayerStack.h"
 #include "Events/ApplicationEvent.h"
 
@@ -32,6 +33,7 @@ namespace Bistro {
         bool onWindowClose(WindowCloseEvent);
 
         std::unique_ptr<Window> m_window;
+        ImGuiLayer* m_imguiLayer;
         bool m_running = true;
         LayerStack m_layerStack;
 

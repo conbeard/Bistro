@@ -18,6 +18,9 @@ namespace Bistro {
 
         m_window = std::unique_ptr<Window>(Window::create());
         m_window->setEventCallback(BIND_EVENT_FN(Application::onEvent));
+
+        m_imguiLayer = new ImGuiLayer();
+        pushOverlay(m_imguiLayer);
     }
 
     Application::~Application() = default;
@@ -29,6 +32,12 @@ namespace Bistro {
 
             for (Layer* layer : m_layerStack)
                 layer->onUpdate();
+
+            // Render ImGui
+            m_imguiLayer->begin();
+            for (Layer* layer : m_layerStack)
+                layer->onImGuiRender();
+            m_imguiLayer->end();
 
             m_window->onUpdate();
         }

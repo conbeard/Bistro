@@ -7,3 +7,6 @@
 [submodule "Bistro/vendor/imgui"]
 	path = Bistro/vendor/imgui
 	url = https://github.com/conbeard/imgui
+[submodule "Bistro/vendor/glm"]
+	path = Bistro/vendor/glm
+	url = https://github.com/g-truc/glm
