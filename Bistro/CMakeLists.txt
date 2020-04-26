@@ -9,9 +9,12 @@ set(BISTRO_SOURCES
         src/Bistro/ImGui/ImGuiLayer.cpp
         src/Bistro/ImGui/ImGuiBuild.cpp
         src/Bistro/Renderer/Shader.cpp
+        src/Bistro/Renderer/Buffer.cpp
+        src/Bistro/Renderer/Renderer.cpp
         src/Platform/MacOS/MacInput.cpp
         src/Platform/MacOS/MacWindow.cpp
         src/Platform/OpenGL/OpenGLContext.cpp
+        src/Platform/OpenGL/OpenGLBuffer.cpp
         )
 
 add_library(${PROJECT_NAME} SHARED ${BISTRO_SOURCES})
