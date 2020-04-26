@@ -15,6 +15,30 @@ namespace Bistro {
 
     Application* Application::s_instance = nullptr;
 
+    static GLenum shaderDataTypeToGLBaseType(ShaderDataType type) {
+        switch (type) {
+            default:
+            case ShaderDataType::None:
+                B_CORE_ASSERT(false, "Unknown ShaderDataType!");
+                return 0;
+            case ShaderDataType::Float:
+            case ShaderDataType::Float2:
+            case ShaderDataType::Float3:
+            case ShaderDataType::Float4:
+            case ShaderDataType::Mat3:
+            case ShaderDataType::Mat4:
+                return GL_FLOAT;
+            case ShaderDataType::Int:
+            case ShaderDataType::Int2:
+            case ShaderDataType::Int3:
+            case ShaderDataType::Int4:
+                return GL_FLOAT;
+            case ShaderDataType::Bool:
+                return GL_BOOL;
+        }
+        return 0;
+    }
+
     Application::Application() {
         B_CORE_ASSERT(!s_instance, "Application already exists!");
         s_instance = this;
@@ -28,31 +52,47 @@ namespace Bistro {
         glGenVertexArrays(1, &m_vertexArray);
         glBindVertexArray(m_vertexArray);
 
-        float vertices[3 * 3] = {
-                -0.5f, -0.5f,  0.0f,
-                 0.5f, -0.5f,  0.0f,
-                 0.0f,  0.5f,  0.0f
+        float vertices[7 * 3] = {
+                -0.5f, -0.5f,  0.0f, 0.7f, 0.4f, 1.0f, 1.0f,
+                 0.5f, -0.5f,  0.0f, 1.0f, 0.4f, 0.4f, 1.0f,
+                 0.0f,  0.5f,  0.0f, 0.8f, 1.0f, 0.4f, 1.0f
         };
 
         m_vertexBuffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
-//        m_vertexBuffer->bind();
 
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+        BufferLayout layout = {
+                { ShaderDataType::Float3, "a_position" },
+                { ShaderDataType::Float4, "a_color" },
+        };
+        m_vertexBuffer->setLayout(layout);
+
+        uint32_t index = 0;
+        for (const auto& ele: m_vertexBuffer->getLayout()) {
+            glEnableVertexAttribArray(index);
+            glVertexAttribPointer(
+                index,
+                ele.getComponentCount(),
+                shaderDataTypeToGLBaseType(ele.type),
+                ele.normalized ? GL_TRUE : GL_FALSE,
+                layout.getStride(),
+                (const void*) ele.offset
+            );
+            index++;
+        }
 
         uint32_t indices[3] = { 0, 1, 2 };
         m_indexBuffer.reset(IndexBuffer::create(indices, 3));
-//        m_vertexBuffer->bind();
 
         std::string vertexSrc = R"(
             #version 330 core
 
             layout(location = 0) in vec3 a_position;
+            layout(location = 1) in vec4 a_color;
 
-            out vec3 v_position;
+            out vec4 v_color;
 
             void main() {
-                v_position = a_position;
+                v_color = a_color;
                 gl_Position = vec4(a_position, 1);
             }
         )";
@@ -62,10 +102,10 @@ namespace Bistro {
 
             layout(location = 0) out vec4 o_color;
 
-            in vec3 v_position;
+            in vec4 v_color;
 
             void main() {
-                o_color = vec4(v_position * 0.5 + 0.5, 1.0);
+                o_color = v_color;
             }
         )";
 
@@ -88,10 +128,10 @@ namespace Bistro {
                 layer->onUpdate();
 
             // Render ImGui
-//            m_imguiLayer->begin();
-//            for (Layer* layer : m_layerStack)
-//                layer->onImGuiRender();
-//            m_imguiLayer->end();
+            m_imguiLayer->begin();
+            for (Layer* layer : m_layerStack)
+                layer->onImGuiRender();
+            m_imguiLayer->end();
 
             m_window->onUpdate();
         }

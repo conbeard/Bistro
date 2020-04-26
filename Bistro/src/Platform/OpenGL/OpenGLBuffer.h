@@ -18,8 +18,12 @@ namespace Bistro {
         void bind() const override;
         void unbind() const override;
 
+        inline void setLayout(const BufferLayout& layout) override { m_layout = layout; }
+        inline const BufferLayout& getLayout() override { return m_layout; }
+
     private:
         uint32_t m_rendererID;
+        BufferLayout m_layout;
     };
 
     class OpenGLIndexBuffer : public IndexBuffer {

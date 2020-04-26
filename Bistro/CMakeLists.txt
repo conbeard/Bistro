@@ -17,7 +17,7 @@ set(BISTRO_SOURCES
         src/Platform/OpenGL/OpenGLBuffer.cpp
         )
 
-add_library(${PROJECT_NAME} SHARED ${BISTRO_SOURCES})
+add_library(${PROJECT_NAME} STATIC ${BISTRO_SOURCES})
 add_library(Bistro::Engine ALIAS ${PROJECT_NAME})
 
 # Platform specific preprocessor defines
