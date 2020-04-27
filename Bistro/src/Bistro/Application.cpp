@@ -5,11 +5,7 @@
 #include "Application.h"
 #include "Log.h"
 #include "Core.h"
-#include "Bistro/Renderer/Buffer.h"
-
-#include <glad/glad.h>
-
-#include <memory>
+#include "Bistro/Renderer/Renderer.h"
 
 namespace Bistro {
 
@@ -95,16 +91,16 @@ namespace Bistro {
 
     void Application::Run() {
         while (m_running) {
-            glClearColor(0.4, 1, 1, 1);
-//            glClearColor(0.1f, 0.1f, 0.1f, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
+            RenderCommand::setClearColor({0.4, 1, 1, 1});
+            RenderCommand::clear();
+
+            Renderer::beginScene();
 
             m_shader->bind();
-            m_vertexArray->bind();
-            glDrawElements(GL_TRIANGLES, m_indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
+            Renderer::submit(m_vertexArray);
+            Renderer::submit(m_squareVertexArray);
 
-            m_squareVertexArray->bind();
-            glDrawElements(GL_TRIANGLES, m_squareIndexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
+            Renderer::endScene();
 
             for (Layer* layer : m_layerStack)
                 layer->onUpdate();
