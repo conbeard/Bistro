@@ -17,6 +17,7 @@
 #include "Bistro/Renderer/Shader.h"
 #include "Bistro/Renderer/Buffer.h"
 #include "Bistro/Renderer/VertexArray.h"
+#include "Bistro/Renderer/OrthographicCamera.h"
 
 namespace Bistro {
     class Application {
@@ -48,6 +49,8 @@ namespace Bistro {
         std::shared_ptr<VertexArray> m_squareVertexArray;
         std::shared_ptr<VertexBuffer> m_squareVertexBuffer;
         std::shared_ptr<IndexBuffer> m_squareIndexBuffer;
+
+        OrthographicCamera m_camera;
 
         static Application* s_instance;
     };

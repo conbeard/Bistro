@@ -11,7 +11,7 @@ namespace Bistro {
 
     Application* Application::s_instance = nullptr;
 
-    Application::Application() {
+    Application::Application() : m_camera(-1.28f, 1.28f, -0.72f, 0.72f) {
         B_CORE_ASSERT(!s_instance, "Application already exists!");
         s_instance = this;
 
@@ -45,8 +45,8 @@ namespace Bistro {
         float rectVertices[7 * 4] = {
                 0.0f,  -0.5f,  0.0f, 1.0f, 0.4f, 0.4f, 1.0f,
                 0.0f,   0.5f,  0.0f, 0.8f, 1.0f, 0.4f, 1.0f,
-                0.5f,   0.5f,  0.0f, 1.0f, 0.4f, 0.4f, 1.0f,
-                0.5f,  -0.5f,  0.0f, 0.7f, 0.4f, 1.0f, 1.0f
+                1.0f,   0.5f,  0.0f, 1.0f, 0.4f, 0.4f, 1.0f,
+                1.0f,  -0.5f,  0.0f, 0.7f, 0.4f, 1.0f, 1.0f
         };
 
         m_squareVertexArray.reset(VertexArray::create());
@@ -64,11 +64,13 @@ namespace Bistro {
             layout(location = 0) in vec3 a_position;
             layout(location = 1) in vec4 a_color;
 
+            uniform mat4 u_viewProjection;
+
             out vec4 v_color;
 
             void main() {
                 v_color = a_color;
-                gl_Position = vec4(a_position, 1);
+                gl_Position = u_viewProjection * vec4(a_position, 1);
             }
         )";
 
@@ -94,12 +96,12 @@ namespace Bistro {
             RenderCommand::setClearColor({0.4, 1, 1, 1});
             RenderCommand::clear();
 
-            Renderer::beginScene();
+            m_camera.setPosition({0.5f, 0.5f, 0.0f});
+            m_camera.setRotation(45.0f);
 
-            m_shader->bind();
-            Renderer::submit(m_vertexArray);
-            Renderer::submit(m_squareVertexArray);
-
+            Renderer::beginScene(m_camera);
+            Renderer::submit(m_shader, m_vertexArray);
+            Renderer::submit(m_shader, m_squareVertexArray);
             Renderer::endScene();
 
             for (Layer* layer : m_layerStack)
