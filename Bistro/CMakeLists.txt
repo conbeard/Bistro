@@ -11,10 +11,12 @@ set(BISTRO_SOURCES
         src/Bistro/Renderer/Shader.cpp
         src/Bistro/Renderer/Buffer.cpp
         src/Bistro/Renderer/Renderer.cpp
+        src/Bistro/Renderer/VertexArray.cpp
         src/Platform/MacOS/MacInput.cpp
         src/Platform/MacOS/MacWindow.cpp
         src/Platform/OpenGL/OpenGLContext.cpp
         src/Platform/OpenGL/OpenGLBuffer.cpp
+        src/Platform/OpenGL/OpenGLVertexArray.cpp
         )
 
 add_library(${PROJECT_NAME} STATIC ${BISTRO_SOURCES})
