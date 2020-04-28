@@ -11,13 +11,9 @@
 #include "Window.h"
 #include "Input.h"
 #include "Layer.h"
-#include "Bistro/ImGui/ImGuiLayer.h"
 #include "LayerStack.h"
+#include "Bistro/ImGui/ImGuiLayer.h"
 #include "Events/ApplicationEvent.h"
-#include "Bistro/Renderer/Shader.h"
-#include "Bistro/Renderer/Buffer.h"
-#include "Bistro/Renderer/VertexArray.h"
-#include "Bistro/Renderer/OrthographicCamera.h"
 
 namespace Bistro {
     class Application {
@@ -40,17 +36,6 @@ namespace Bistro {
         ImGuiLayer* m_imguiLayer;
         bool m_running = true;
         LayerStack m_layerStack;
-
-        std::shared_ptr<Shader> m_shader;
-        std::shared_ptr<VertexArray> m_vertexArray;
-        std::shared_ptr<VertexBuffer> m_vertexBuffer;
-        std::shared_ptr<IndexBuffer> m_indexBuffer;
-
-        std::shared_ptr<VertexArray> m_squareVertexArray;
-        std::shared_ptr<VertexBuffer> m_squareVertexBuffer;
-        std::shared_ptr<IndexBuffer> m_squareIndexBuffer;
-
-        OrthographicCamera m_camera;
 
         static Application* s_instance;
     };

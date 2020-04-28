@@ -17,6 +17,14 @@
 
 #include "Bistro/ImGui/ImGuiLayer.h"
 
+#include "Bistro/Renderer/Renderer.h"
+#include "Bistro/Renderer/RenderCommand.h"
+
+#include "Bistro/Renderer/Buffer.h"
+#include "Bistro/Renderer/Shader.h"
+#include "Bistro/Renderer/VertexArray.h"
+#include "Bistro/Renderer/OrthographicCamera.h"
+
 #include "Bistro/EntryPoint.h"
 
 #endif //BISTRO_BISTRO_H
