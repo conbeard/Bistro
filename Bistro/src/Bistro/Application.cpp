@@ -7,6 +7,8 @@
 #include "Core.h"
 #include "Bistro/Renderer/Renderer.h"
 
+#include <GLFW/glfw3.h>
+
 namespace Bistro {
 
     Application* Application::s_instance = nullptr;
@@ -26,8 +28,12 @@ namespace Bistro {
 
     void Application::Run() {
         while (m_running) {
+            auto time = (float) glfwGetTime(); // Temporary, replace with platform specific
+            Timestep timestep = time - m_lastFrameTime;
+            m_lastFrameTime = time;
+
             for (Layer* layer : m_layerStack)
-                layer->onUpdate();
+                layer->onUpdate(timestep);
 
             // Render ImGui
             m_imguiLayer->begin();

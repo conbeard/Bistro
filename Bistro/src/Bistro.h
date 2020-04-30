@@ -12,6 +12,8 @@
 #include "Bistro/Layer.h"
 #include "Bistro/Log.h"
 
+#include "Bistro/Core/Timestep.h"
+
 #include "Bistro/KeyCodes.h"
 #include "Bistro/MouseButtonCodes.h"
 

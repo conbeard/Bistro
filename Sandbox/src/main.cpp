@@ -83,23 +83,25 @@ public:
         m_shader = std::make_unique<Bistro::Shader>(vertexSrc, fragmentSrc);
     }
 
-    void onUpdate() override {
+    void onUpdate(Bistro::Timestep ts) override {
+        B_TRACE("FPS: {0}, Delta time: {1}ms", 1.0f / ts.getSeconds(), ts.getMilliseconds());
+
         Bistro::RenderCommand::setClearColor({0.4, 1, 1, 1});
         Bistro::RenderCommand::clear();
 
         // WASD QE Camera controls
         if (Bistro::Input::isKeyPressed(B_KEY_A))
-            m_cameraPosition.x -= m_cameraSpeed;
+            m_cameraPosition.x -= m_cameraSpeed * ts;
         if (Bistro::Input::isKeyPressed(B_KEY_D))
-            m_cameraPosition.x += m_cameraSpeed;
+            m_cameraPosition.x += m_cameraSpeed * ts;
         if (Bistro::Input::isKeyPressed(B_KEY_S))
-            m_cameraPosition.y -= m_cameraSpeed;
+            m_cameraPosition.y -= m_cameraSpeed * ts;
         if (Bistro::Input::isKeyPressed(B_KEY_W))
-            m_cameraPosition.y += m_cameraSpeed;
+            m_cameraPosition.y += m_cameraSpeed * ts;
         if (Bistro::Input::isKeyPressed(B_KEY_Q))
-            m_cameraRotation += m_cameraSpeed;
+            m_cameraRotation += m_cameraSpeed * ts;
         if (Bistro::Input::isKeyPressed(B_KEY_E))
-            m_cameraRotation -= m_cameraSpeed;
+            m_cameraRotation -= m_cameraSpeed * ts;
 
         m_camera.setPosition(m_cameraPosition);
         m_camera.setRotation(m_cameraRotation);
@@ -132,7 +134,7 @@ private:
     Bistro::OrthographicCamera m_camera;
     glm::vec3 m_cameraPosition;
     float m_cameraRotation = 0.0f;
-    float m_cameraSpeed = 0.1f;
+    float m_cameraSpeed = 2.0f;
 };
 
 class Sandbox : public Bistro::Application {

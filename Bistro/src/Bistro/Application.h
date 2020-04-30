@@ -12,6 +12,7 @@
 #include "Input.h"
 #include "Layer.h"
 #include "LayerStack.h"
+#include "Bistro/Core/Timestep.h"
 #include "Bistro/ImGui/ImGuiLayer.h"
 #include "Events/ApplicationEvent.h"
 
@@ -36,6 +37,7 @@ namespace Bistro {
         ImGuiLayer* m_imguiLayer;
         bool m_running = true;
         LayerStack m_layerStack;
+        float m_lastFrameTime;
 
         static Application* s_instance;
     };

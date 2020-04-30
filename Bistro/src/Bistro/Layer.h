@@ -7,6 +7,7 @@
 
 #include "Core.h"
 #include "Events/Event.h"
+#include "Bistro/Core/Timestep.h"
 
 namespace Bistro {
 
@@ -17,7 +18,7 @@ namespace Bistro {
 
         virtual void onAttach() {}
         virtual void onDetach() {}
-        virtual void onUpdate() {}
+        virtual void onUpdate(Timestep ts) {}
         virtual void onImGuiRender() {}
         virtual void onEvent(Event& event) {}
 
