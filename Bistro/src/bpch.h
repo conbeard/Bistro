@@ -6,6 +6,7 @@
 #define BISTRO_BPCH_H
 
 #include <iostream>
+#include <fstream>
 #include <memory>
 #include <utility>
 #include <algorithm>

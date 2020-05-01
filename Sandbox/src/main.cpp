@@ -52,35 +52,8 @@ public:
         squareIB.reset(Bistro::IndexBuffer::create(rectIndices, 6));
         m_squareVertexArray->setIndexBuffer(squareIB);
 
-        std::string vertexSrc = R"(
-            #version 330 core
-
-            layout(location = 0) in vec3 a_position;
-            layout(location = 1) in vec4 a_color;
-
-            uniform mat4 u_viewProjection;
-
-            out vec4 v_color;
-
-            void main() {
-                v_color = a_color;
-                gl_Position = u_viewProjection * vec4(a_position, 1);
-            }
-        )";
-
-        std::string fragmentSrc = R"(
-            #version 330 core
-
-            layout(location = 0) out vec4 o_color;
-
-            in vec4 v_color;
-
-            void main() {
-                o_color = v_color;
-            }
-        )";
-
-        m_shader = std::make_unique<Bistro::Shader>(vertexSrc, fragmentSrc);
+        // TODO: add shader files to the build process to automatically move them
+        m_shader = std::make_unique<Bistro::Shader>("Shaders/vertex.glsl", "Shaders/fragment.glsl");
     }
 
     void onUpdate(Bistro::Timestep ts) override {

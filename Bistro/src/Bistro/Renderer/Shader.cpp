@@ -11,14 +11,28 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Bistro {
-    Shader::Shader(const std::string &vertexSrc, const std::string &fragmentSrc) {
+    Shader::Shader(const std::string &vertexFilename, const std::string &fragmentFilename) {
+        std::ifstream vertexFile(vertexFilename);
+        std::stringstream vertexStream;
+
+        for (std::string line; std::getline(vertexFile, line); ) {
+            vertexStream << line << "\n";
+        }
+
+        std::ifstream fragmentFile(fragmentFilename);
+        std::stringstream fragmentStream;
+
+        for (std::string line; std::getline(fragmentFile, line); ) {
+            fragmentStream << line << "\n";
+        }
 
         // Create an empty vertex shader handle
         GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
         // Send the vertex shader source code to GL
         // Note that std::string's .c_str is NULL character terminated.
-        const auto *source = (const GLchar *)vertexSrc.c_str();
+        std::string temp = vertexStream.str();
+        const auto *source = (const GLchar *)temp.c_str();
         glShaderSource(vertexShader, 1, &source, 0);
 
         // Compile the vertex shader
@@ -51,7 +65,8 @@ namespace Bistro {
 
         // Send the fragment shader source code to GL
         // Note that std::string's .c_str is NULL character terminated.
-        source = (const GLchar *)fragmentSrc.c_str();
+        temp = fragmentStream.str();
+        source = (const GLchar *)temp.c_str();
         glShaderSource(fragmentShader, 1, &source, 0);
 
         // Compile the fragment shader
