@@ -5,7 +5,7 @@
 #ifndef BISTRO_LAYER_H
 #define BISTRO_LAYER_H
 
-#include "Core.h"
+#include "Bistro/Core/Core.h"
 #include "Events/Event.h"
 #include "Bistro/Core/Timestep.h"
 

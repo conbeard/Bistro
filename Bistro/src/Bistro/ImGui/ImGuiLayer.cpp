@@ -5,8 +5,8 @@
 #include "bpch.h"
 #include "ImGuiLayer.h"
 
-#include "Core.h"
-#include "Bistro/Log.h"
+#include "Bistro/Core/Core.h"
+#include "Bistro/Core/Log.h"
 #include "Bistro/KeyCodes.h"
 #include "Bistro/MouseButtonCodes.h"
 #include "Bistro/Events/Event.h"
@@ -17,7 +17,7 @@
 #include "examples/imgui_impl_opengl3.h"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
-#include <Bistro/Application.h>
+#include <Bistro/Core/Application.h>
 
 namespace Bistro {
 

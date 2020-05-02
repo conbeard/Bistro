@@ -6,7 +6,7 @@
 #define BISTRO_LAYERSTACK_H
 
 #include "bpch.h"
-#include "Core.h"
+#include "Bistro/Core/Core.h"
 #include "Layer.h"
 
 namespace Bistro {

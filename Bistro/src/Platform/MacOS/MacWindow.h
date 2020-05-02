@@ -5,7 +5,7 @@
 #ifndef BISTRO_MACWINDOW_H
 #define BISTRO_MACWINDOW_H
 
-#include "Bistro/Window.h"
+#include "Bistro/Core/Window.h"
 #include "Bistro/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>

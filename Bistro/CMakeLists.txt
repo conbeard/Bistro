@@ -2,8 +2,8 @@ project(bistro-engine)
 
 # Add Sources
 set(BISTRO_SOURCES
-        src/Bistro/Application.cpp
-        src/Bistro/Log.cpp
+        src/Bistro/Core/Application.cpp
+        src/Bistro/Core/Log.cpp
         src/Bistro/Layer.cpp
         src/Bistro/LayerStack.cpp
         src/Bistro/ImGui/ImGuiLayer.cpp

@@ -5,8 +5,8 @@
 #include "bpch.h"
 #include "OpenGLContext.h"
 
-#include "Bistro/Core.h"
-#include "Bistro/Log.h"
+#include "Bistro/Core/Core.h"
+#include "Bistro/Core/Log.h"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>

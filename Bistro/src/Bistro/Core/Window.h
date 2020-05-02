@@ -9,7 +9,7 @@
 
 #include "bpch.h"
 
-#include "Bistro/Core.h"
+#include "Core.h"
 #include "Bistro/Events/Event.h"
 
 namespace Bistro {

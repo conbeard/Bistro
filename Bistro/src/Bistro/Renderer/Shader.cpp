@@ -5,7 +5,7 @@
 #include "bpch.h"
 #include "Shader.h"
 
-#include "Log.h"
+#include "Bistro/Core/Log.h"
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>

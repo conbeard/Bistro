@@ -8,7 +8,7 @@
 #define BISTRO_EVENT_H
 
 #include "bpch.h"
-#include "Bistro/Core.h"
+#include "Bistro/Core/Core.h"
 
 namespace Bistro {
 

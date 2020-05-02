@@ -5,8 +5,8 @@
 #ifndef BISTRO_BUFFER_H
 #define BISTRO_BUFFER_H
 
-#include "Bistro/Core.h"
-#include "Bistro/Log.h"
+#include "Bistro/Core/Core.h"
+#include "Bistro/Core/Log.h"
 
 namespace Bistro {
 

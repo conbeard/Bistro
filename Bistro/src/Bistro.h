@@ -5,12 +5,12 @@
 #ifndef BISTRO_BISTRO_H
 #define BISTRO_BISTRO_H
 
-#include "Bistro/Core.h"
+#include "Bistro/Core/Core.h"
 
-#include "Bistro/Application.h"
+#include "Bistro/Core/Application.h"
 #include "Bistro/Input.h"
 #include "Bistro/Layer.h"
-#include "Bistro/Log.h"
+#include "Bistro/Core/Log.h"
 
 #include "Bistro/Core/Timestep.h"
 
@@ -27,6 +27,6 @@
 #include "Bistro/Renderer/VertexArray.h"
 #include "Bistro/Renderer/OrthographicCamera.h"
 
-#include "Bistro/EntryPoint.h"
+#include "Bistro/Core/EntryPoint.h"
 
 #endif //BISTRO_BISTRO_H

@@ -4,7 +4,7 @@
 
 #include "bpch.h"
 #include "MacWindow.h"
-#include "Log.h"
+#include "Bistro/Core/Log.h"
 
 #include "Bistro/Events/Event.h"
 #include "Bistro/Events/KeyEvent.h"

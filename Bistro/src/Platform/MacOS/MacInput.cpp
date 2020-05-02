@@ -5,7 +5,7 @@
 #include "bpch.h"
 #include "MacInput.h"
 
-#include "Bistro/Application.h"
+#include "Bistro/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 
