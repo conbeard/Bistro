@@ -2,8 +2,8 @@
 
 layout(location = 0) out vec4 o_color;
 
-in vec4 v_color;
+uniform vec4 u_color;
 
 void main() {
-    o_color = v_color;
+    o_color = u_color;
 }

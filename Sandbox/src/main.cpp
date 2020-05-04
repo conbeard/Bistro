@@ -6,6 +6,8 @@
 #include <imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <Platform/OpenGL/OpenGLShader.h>
 
 class ExampleLayer : public Bistro::Layer {
 public:
@@ -14,9 +16,9 @@ public:
         m_vertexArray.reset(Bistro::VertexArray::create());
 
         float vertices[7 * 3] = {
-                -0.5f,  -0.5f,  0.0f, 0.7f, 0.4f, 1.0f, 1.0f,
-                0.0f,  -0.5f,  0.0f, 1.0f, 0.4f, 0.4f, 1.0f,
-                -0.25f,  0.5f,  0.0f, 0.8f, 1.0f, 0.4f, 1.0f
+                -0.5f,  -0.5f,  0.0f,
+                0.0f,  -0.5f,  0.0f,
+                -0.25f,  0.5f,  0.0f
         };
 
         std::shared_ptr<Bistro::VertexBuffer> triangleVB;
@@ -25,7 +27,6 @@ public:
         triangleVB.reset(Bistro::VertexBuffer::create(vertices, sizeof(vertices)));
         Bistro::BufferLayout layout = {
                 { Bistro::ShaderDataType::Float3, "a_position" },
-                { Bistro::ShaderDataType::Float4, "a_color" },
         };
         triangleVB->setLayout(layout);
         m_vertexArray->addVertexBuffer(triangleVB);
@@ -36,10 +37,10 @@ public:
 
 
         float rectVertices[7 * 4] = {
-                0.0f,  -0.5f,  0.0f, 1.0f, 0.4f, 0.4f, 1.0f,
-                0.0f,   0.5f,  0.0f, 0.8f, 1.0f, 0.4f, 1.0f,
-                1.0f,   0.5f,  0.0f, 1.0f, 0.4f, 0.4f, 1.0f,
-                1.0f,  -0.5f,  0.0f, 0.7f, 0.4f, 1.0f, 1.0f
+                -0.5f,  -0.5f,  0.0f,
+                0.5f,   -0.5f,  0.0f,
+                0.5f,   0.5f,  0.0f,
+                -0.5f,  0.5f,  0.0f
         };
 
         std::shared_ptr<Bistro::VertexBuffer> squareVB;
@@ -55,7 +56,7 @@ public:
         m_squareVertexArray->setIndexBuffer(squareIB);
 
         // TODO: add shader files to the build process to automatically move them
-        m_shader = std::make_unique<Bistro::Shader>("Shaders/vertex.glsl", "Shaders/fragment.glsl");
+        m_shader.reset(Bistro::Shader::create("Shaders/vertex.glsl", "Shaders/fragment.glsl"));
     }
 
     void onUpdate(Bistro::Timestep ts) override {
@@ -94,8 +95,20 @@ public:
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_trianglePosition);
 
         Bistro::Renderer::beginScene(m_camera);
+
+        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_shader)->bind();
+        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_shader)->uploadUniformFloat4("u_color", m_rectColor);
+
+        for (int i = 0; i < 20; ++i) {
+            for (int j = 0; j < 20; ++j) {
+                glm::vec3 pos = {j * 0.11f, i * 0.11f, 0.0f};
+                glm::mat4 t = glm::translate(glm::mat4(1.0f), pos) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+                Bistro::Renderer::submit(m_shader, m_squareVertexArray, t);
+            }
+        }
+
         Bistro::Renderer::submit(m_shader, m_vertexArray, transform);
-        Bistro::Renderer::submit(m_shader, m_squareVertexArray);
+
         Bistro::Renderer::endScene();
     }
 
@@ -106,7 +119,9 @@ public:
     }
 
     void onImGuiRender() override {
-
+        ImGui::Begin("Settings");
+        ImGui::ColorEdit4("Rect color", glm::value_ptr(m_rectColor));
+        ImGui::End();
     }
 
     bool onKeyPressed(Bistro::KeyPressedEvent& event) {
@@ -124,6 +139,7 @@ private:
     float m_cameraSpeed = 2.0f;
 
     glm::vec3 m_trianglePosition;
+    glm::vec4 m_rectColor = {0.2f, 0.3f, 0.8f, 1.0f};
 };
 
 class Sandbox : public Bistro::Application {

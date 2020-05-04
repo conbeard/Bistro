@@ -17,6 +17,7 @@ set(BISTRO_SOURCES
         src/Bistro/Renderer/OrthographicCamera.cpp
         src/Platform/MacOS/MacInput.cpp
         src/Platform/MacOS/MacWindow.cpp
+        src/Platform/OpenGL/OpenGLShader.cpp
         src/Platform/OpenGL/OpenGLContext.cpp
         src/Platform/OpenGL/OpenGLBuffer.cpp
         src/Platform/OpenGL/OpenGLVertexArray.cpp
