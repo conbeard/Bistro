@@ -5,9 +5,11 @@
 #include <Bistro.h>
 #include <imgui.h>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 class ExampleLayer : public Bistro::Layer {
 public:
-    ExampleLayer() : Layer("Example"), m_camera(-1.28f, 1.28f, -0.72f, 0.72f), m_cameraPosition(0.0f) {
+    ExampleLayer() : Layer("Example"), m_camera(-1.28f, 1.28f, -0.72f, 0.72f), m_cameraPosition(0.0f), m_trianglePosition(0.0f) {
 
         m_vertexArray.reset(Bistro::VertexArray::create());
 
@@ -76,11 +78,23 @@ public:
         if (Bistro::Input::isKeyPressed(B_KEY_E))
             m_cameraRotation -= m_cameraSpeed * ts;
 
+        // TFGH triangle controls
+        if (Bistro::Input::isKeyPressed(B_KEY_H))
+            m_trianglePosition.x += m_cameraSpeed * ts;
+        if (Bistro::Input::isKeyPressed(B_KEY_F))
+            m_trianglePosition.x -= m_cameraSpeed * ts;
+        if (Bistro::Input::isKeyPressed(B_KEY_T))
+            m_trianglePosition.y += m_cameraSpeed * ts;
+        if (Bistro::Input::isKeyPressed(B_KEY_G))
+            m_trianglePosition.y -= m_cameraSpeed * ts;
+
         m_camera.setPosition(m_cameraPosition);
         m_camera.setRotation(m_cameraRotation);
 
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_trianglePosition);
+
         Bistro::Renderer::beginScene(m_camera);
-        Bistro::Renderer::submit(m_shader, m_vertexArray);
+        Bistro::Renderer::submit(m_shader, m_vertexArray, transform);
         Bistro::Renderer::submit(m_shader, m_squareVertexArray);
         Bistro::Renderer::endScene();
     }
@@ -108,6 +122,8 @@ private:
     glm::vec3 m_cameraPosition;
     float m_cameraRotation = 0.0f;
     float m_cameraSpeed = 2.0f;
+
+    glm::vec3 m_trianglePosition;
 };
 
 class Sandbox : public Bistro::Application {

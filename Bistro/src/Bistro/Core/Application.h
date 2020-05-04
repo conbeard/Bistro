@@ -9,12 +9,12 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "Input.h"
-#include "Layer.h"
-#include "LayerStack.h"
+#include "Bistro/Input.h"
+#include "Bistro/Layer.h"
+#include "Bistro/LayerStack.h"
 #include "Bistro/Core/Timestep.h"
 #include "Bistro/ImGui/ImGuiLayer.h"
-#include "Events/ApplicationEvent.h"
+#include "Bistro/Events/ApplicationEvent.h"
 
 namespace Bistro {
     class Application {
