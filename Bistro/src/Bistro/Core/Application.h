@@ -33,7 +33,7 @@ namespace Bistro {
     private:
         bool onWindowClose(WindowCloseEvent);
 
-        std::unique_ptr<Window> m_window;
+        Scope<Window> m_window;
         ImGuiLayer* m_imguiLayer;
         bool m_running = true;
         LayerStack m_layerStack;

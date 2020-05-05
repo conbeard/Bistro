@@ -21,8 +21,8 @@ public:
                 -0.25f,  0.5f,  0.0f
         };
 
-        std::shared_ptr<Bistro::VertexBuffer> triangleVB;
-        std::shared_ptr<Bistro::IndexBuffer> triangleIB;
+        Bistro::Ref<Bistro::VertexBuffer> triangleVB;
+        Bistro::Ref<Bistro::IndexBuffer> triangleIB;
 
         triangleVB.reset(Bistro::VertexBuffer::create(vertices, sizeof(vertices)));
         Bistro::BufferLayout layout = {
@@ -43,8 +43,8 @@ public:
                 -0.5f,  0.5f,  0.0f
         };
 
-        std::shared_ptr<Bistro::VertexBuffer> squareVB;
-        std::shared_ptr<Bistro::IndexBuffer> squareIB;
+        Bistro::Ref<Bistro::VertexBuffer> squareVB;
+        Bistro::Ref<Bistro::IndexBuffer> squareIB;
 
         m_squareVertexArray.reset(Bistro::VertexArray::create());
         squareVB.reset(Bistro::VertexBuffer::create(rectVertices, sizeof(rectVertices)));
@@ -129,9 +129,9 @@ public:
     }
 
 private:
-    std::shared_ptr<Bistro::Shader> m_shader;
-    std::shared_ptr<Bistro::VertexArray> m_vertexArray;
-    std::shared_ptr<Bistro::VertexArray> m_squareVertexArray;
+    Bistro::Ref<Bistro::Shader> m_shader;
+    Bistro::Ref<Bistro::VertexArray> m_vertexArray;
+    Bistro::Ref<Bistro::VertexArray> m_squareVertexArray;
 
     Bistro::OrthographicCamera m_camera;
     glm::vec3 m_cameraPosition;
