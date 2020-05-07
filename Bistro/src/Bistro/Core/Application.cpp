@@ -20,6 +20,8 @@ namespace Bistro {
         m_window = Scope<Window>(Window::create());
         m_window->setEventCallback(BIND_EVENT_FN(Application::onEvent));
 
+        Renderer::init();
+
         m_imguiLayer = new ImGuiLayer();
         pushOverlay(m_imguiLayer);
     }

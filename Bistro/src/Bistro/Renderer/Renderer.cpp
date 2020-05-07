@@ -12,6 +12,10 @@ namespace Bistro {
 
     Renderer::SceneData* Renderer::s_sceneData = new Renderer::SceneData;
 
+    void Renderer::init() {
+        RenderCommand::init();
+    }
+
     void Renderer::beginScene(OrthographicCamera& camera) {
         s_sceneData->viewProjectMatrix = camera.getViewProjectionMatrix();
     }
