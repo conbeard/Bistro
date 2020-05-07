@@ -60,8 +60,8 @@ public:
         m_squareVertexArray->setIndexBuffer(squareIB);
 
         // TODO: add shader files to the build process to automatically move them
-        m_shader.reset(Bistro::Shader::create("Shaders/vertex.glsl", "Shaders/fragment.glsl"));
-        m_textureShader.reset(Bistro::Shader::create("Shaders/textureVertex.glsl", "Shaders/textureFragment.glsl"));
+        m_shader.reset(Bistro::Shader::create("assets/shaders/vertexColor.glsl"));
+        m_textureShader.reset(Bistro::Shader::create("assets/shaders/texture.glsl"));
 
         m_cupheadTexture = Bistro::Texture2D::create("assets/textures/Cuphead.png");
         std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_textureShader)->bind();

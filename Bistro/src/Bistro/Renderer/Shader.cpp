@@ -9,14 +9,25 @@
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace Bistro {
-    Shader *Shader::create(const std::string &vertexFilename, const std::string &fragmentFilename) {
+    Shader *Shader::create(const std::string &vertexSrc, const std::string &fragmentSrc) {
         switch (Renderer::getAPI()) {
             default:
             case RendererAPI::API::None:
                 B_CORE_ASSERT(false, "RendererAPI::None is not supported!")
                 return nullptr;
             case RendererAPI::API::OpenGL:
-                return new OpenGLShader(vertexFilename, fragmentFilename);
+                return new OpenGLShader(vertexSrc, fragmentSrc);
+        }
+    }
+
+    Shader *Shader::create(const std::string &filepath) {
+        switch (Renderer::getAPI()) {
+            default:
+            case RendererAPI::API::None:
+                B_CORE_ASSERT(false, "RendererAPI::None is not supported!")
+                return nullptr;
+            case RendererAPI::API::OpenGL:
+                return new OpenGLShader(filepath);
         }
     }
 }

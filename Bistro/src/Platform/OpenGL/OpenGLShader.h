@@ -8,12 +8,14 @@
 #include "Bistro/Renderer/Shader.h"
 
 #include <glm/glm.hpp>
+#include <glad/glad.h>
 
 namespace Bistro {
 
     class OpenGLShader : public Shader {
     public:
-        OpenGLShader(const std::string& vertexFilename, const std::string& fragmentFilename);
+        OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+        OpenGLShader(const std::string& filepath);
         virtual ~OpenGLShader();
 
         void bind() const override;
@@ -28,6 +30,11 @@ namespace Bistro {
 
         void uploadUniformMat3(const std::string &name, const glm::mat3 &matrix) const;
         void uploadUniformMat4(const std::string &name, const glm::mat4 &matrix) const;
+
+    private:
+        std::string readFile(const std::string& filepath);
+        std::unordered_map<GLenum, std::string> preprocess(const std::string& shaderSrc);
+        void compile(const std::unordered_map<GLenum, std::string>& shaderSrcs);
     private:
         uint32_t m_rendererID;
     };
