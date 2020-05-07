@@ -24,6 +24,7 @@
 
 #include "Bistro/Renderer/Buffer.h"
 #include "Bistro/Renderer/Shader.h"
+#include "Bistro/Renderer/Texture.h"
 #include "Bistro/Renderer/VertexArray.h"
 #include "Bistro/Renderer/OrthographicCamera.h"
 

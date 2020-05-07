@@ -13,34 +13,34 @@ class ExampleLayer : public Bistro::Layer {
 public:
     ExampleLayer() : Layer("Example"), m_camera(-1.28f, 1.28f, -0.72f, 0.72f), m_cameraPosition(0.0f), m_trianglePosition(0.0f) {
 
-        m_vertexArray.reset(Bistro::VertexArray::create());
+//        m_vertexArray.reset(Bistro::VertexArray::create());
+//
+//        float vertices[3 * 3] = {
+//                -0.5f,  -0.5f,  0.0f,
+//                0.0f,  -0.5f,  0.0f,
+//                -0.25f,  0.5f,  0.0f
+//        };
+//
+//        Bistro::Ref<Bistro::VertexBuffer> triangleVB;
+//        Bistro::Ref<Bistro::IndexBuffer> triangleIB;
+//
+//        triangleVB.reset(Bistro::VertexBuffer::create(vertices, sizeof(vertices)));
+//        Bistro::BufferLayout layout = {
+//                { Bistro::ShaderDataType::Float3, "a_position" },
+//        };
+//        triangleVB->setLayout(layout);
+//        m_vertexArray->addVertexBuffer(triangleVB);
+//
+//        uint32_t indices[3] = { 0, 1, 2 };
+//        triangleIB.reset(Bistro::IndexBuffer::create(indices, 3));
+//        m_vertexArray->setIndexBuffer(triangleIB);
 
-        float vertices[7 * 3] = {
-                -0.5f,  -0.5f,  0.0f,
-                0.0f,  -0.5f,  0.0f,
-                -0.25f,  0.5f,  0.0f
-        };
 
-        Bistro::Ref<Bistro::VertexBuffer> triangleVB;
-        Bistro::Ref<Bistro::IndexBuffer> triangleIB;
-
-        triangleVB.reset(Bistro::VertexBuffer::create(vertices, sizeof(vertices)));
-        Bistro::BufferLayout layout = {
-                { Bistro::ShaderDataType::Float3, "a_position" },
-        };
-        triangleVB->setLayout(layout);
-        m_vertexArray->addVertexBuffer(triangleVB);
-
-        uint32_t indices[3] = { 0, 1, 2 };
-        triangleIB.reset(Bistro::IndexBuffer::create(indices, 3));
-        m_vertexArray->setIndexBuffer(triangleIB);
-
-
-        float rectVertices[7 * 4] = {
-                -0.5f,  -0.5f,  0.0f,
-                0.5f,   -0.5f,  0.0f,
-                0.5f,   0.5f,  0.0f,
-                -0.5f,  0.5f,  0.0f
+        float rectVertices[5 * 4] = {
+                -0.5f,  -0.5f,  0.0f, 0.0f, 0.0f,
+                0.5f,   -0.5f,  0.0f, 1.0f, 0.0f,
+                0.5f,   0.5f,  0.0f,  1.0f, 1.0f,
+                -0.5f,  0.5f,  0.0f,  0.0f, 1.0f
         };
 
         Bistro::Ref<Bistro::VertexBuffer> squareVB;
@@ -48,6 +48,10 @@ public:
 
         m_squareVertexArray.reset(Bistro::VertexArray::create());
         squareVB.reset(Bistro::VertexBuffer::create(rectVertices, sizeof(rectVertices)));
+        Bistro::BufferLayout layout = {
+                { Bistro::ShaderDataType::Float3, "a_position" },
+                { Bistro::ShaderDataType::Float2, "a_texCoord" },
+        };
         squareVB->setLayout(layout);
         m_squareVertexArray->addVertexBuffer(squareVB);
 
@@ -57,6 +61,11 @@ public:
 
         // TODO: add shader files to the build process to automatically move them
         m_shader.reset(Bistro::Shader::create("Shaders/vertex.glsl", "Shaders/fragment.glsl"));
+        m_textureShader.reset(Bistro::Shader::create("Shaders/textureVertex.glsl", "Shaders/textureFragment.glsl"));
+
+        m_cupheadTexture = Bistro::Texture2D::create("assets/textures/Cuphead.png");
+        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_textureShader)->bind();
+        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_textureShader)->uploadUniformInt("u_texture", 0);
     }
 
     void onUpdate(Bistro::Timestep ts) override {
@@ -107,7 +116,12 @@ public:
             }
         }
 
-        Bistro::Renderer::submit(m_shader, m_vertexArray, transform);
+        // Textured rect
+        m_cupheadTexture->bind();
+        Bistro::Renderer::submit(m_textureShader, m_squareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
+
+        // Triangle
+//        Bistro::Renderer::submit(m_shader, m_vertexArray, transform);
 
         Bistro::Renderer::endScene();
     }
@@ -129,9 +143,11 @@ public:
     }
 
 private:
-    Bistro::Ref<Bistro::Shader> m_shader;
-    Bistro::Ref<Bistro::VertexArray> m_vertexArray;
+    Bistro::Ref<Bistro::Shader> m_shader, m_textureShader;
+//    Bistro::Ref<Bistro::VertexArray> m_vertexArray;
     Bistro::Ref<Bistro::VertexArray> m_squareVertexArray;
+
+    Bistro::Ref<Bistro::Texture2D> m_cupheadTexture;
 
     Bistro::OrthographicCamera m_camera;
     glm::vec3 m_cameraPosition;

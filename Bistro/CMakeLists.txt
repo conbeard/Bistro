@@ -13,6 +13,7 @@ set(BISTRO_SOURCES
         src/Bistro/Renderer/Renderer.cpp
         src/Bistro/Renderer/RendererAPI.cpp
         src/Bistro/Renderer/RenderCommand.cpp
+        src/Bistro/Renderer/Texture.cpp
         src/Bistro/Renderer/VertexArray.cpp
         src/Bistro/Renderer/OrthographicCamera.cpp
         src/Platform/MacOS/MacInput.cpp
@@ -22,6 +23,7 @@ set(BISTRO_SOURCES
         src/Platform/OpenGL/OpenGLBuffer.cpp
         src/Platform/OpenGL/OpenGLVertexArray.cpp
         src/Platform/OpenGL/OpenGLRendererAPI.cpp
+        src/Platform/OpenGL/OpenGLTexture.cpp
         )
 
 add_library(${PROJECT_NAME} STATIC ${BISTRO_SOURCES})
@@ -47,7 +49,9 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC GLFW_INCLUDE_NONE)
 
 # Copy over shader files
 configure_file(${PROJECT_SOURCE_DIR}/src/Shaders/vertex.glsl ${CMAKE_CURRENT_BINARY_DIR}/Shaders COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/src/Shaders/textureVertex.glsl ${CMAKE_CURRENT_BINARY_DIR}/Shaders COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/src/Shaders/fragment.glsl ${CMAKE_CURRENT_BINARY_DIR}/Shaders COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/src/Shaders/textureFragment.glsl ${CMAKE_CURRENT_BINARY_DIR}/Shaders COPYONLY)
 
 # Set include directories
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
@@ -63,6 +67,7 @@ find_package(glfw3 REQUIRED)
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/imgui)
 add_subdirectory(vendor/glm REQUIRED)
+add_subdirectory(vendor/stb_image)
 
 # Link libraries (e.g. logging)
 target_link_libraries(${PROJECT_NAME}
@@ -71,5 +76,6 @@ target_link_libraries(${PROJECT_NAME}
         glad
         imgui
         glm
+        stb_image
 )
 
