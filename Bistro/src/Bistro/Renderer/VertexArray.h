@@ -11,7 +11,7 @@ namespace Bistro {
 
     class VertexArray {
     public:
-        virtual ~VertexArray() = default;;
+        virtual ~VertexArray() = default;
 
         virtual void bind() const = 0;
         virtual void unbind() const = 0;

@@ -6,6 +6,7 @@
 #define BISTRO_CORE_H
 
 #include <memory>
+#include <csignal>
 
 #define B_ASSERT(x, ...) { if (!x) { B_ERROR("ASSERTION FAILED: {0}", __VA_ARGS__); raise(SIGTRAP); } }
 #define B_CORE_ASSERT(x, ...) { if (!x) { B_CORE_CRITICAL("ASSERTION FAILED: {0}", __VA_ARGS__); raise(SIGTRAP); } }

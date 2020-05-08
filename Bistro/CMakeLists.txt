@@ -18,6 +18,8 @@ set(BISTRO_SOURCES
         src/Bistro/Renderer/OrthographicCamera.cpp
         src/Platform/MacOS/MacInput.cpp
         src/Platform/MacOS/MacWindow.cpp
+        src/Platform/MacOS/MacVertexArray.cpp
+        src/Platform/MacOS/VertexArray.mm
         src/Platform/OpenGL/OpenGLShader.cpp
         src/Platform/OpenGL/OpenGLContext.cpp
         src/Platform/OpenGL/OpenGLBuffer.cpp
@@ -39,6 +41,7 @@ endif()
 if(APPLE)
     # for MacOS X or iOS, watchOS, tvOS (since 3.10.3)
     target_compile_definitions(${PROJECT_NAME} PUBLIC B_PLATFORM_APPLE=1)
+     set(CMAKE_EXE_LINKER_FLAGS "-framework Foundation -w")
 endif()
 if(UNIX AND NOT APPLE)
     # for Linux, BSD, Solaris, Minix
@@ -60,7 +63,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/Bis
 # Language standard
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 # Precompiled Headers
-target_precompile_headers(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/bpch.h")
+#target_precompile_headers(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/bpch.h")
 
 find_package(spdlog REQUIRED)
 find_package(glfw3 REQUIRED)
