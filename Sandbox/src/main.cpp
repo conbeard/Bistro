@@ -59,13 +59,13 @@ public:
         squareIB.reset(Bistro::IndexBuffer::create(rectIndices, 6));
         m_squareVertexArray->setIndexBuffer(squareIB);
 
-        // TODO: add shader files to the build process to automatically move them
-        m_shader.reset(Bistro::Shader::create("assets/shaders/vertexColor.glsl"));
-        m_textureShader.reset(Bistro::Shader::create("assets/shaders/texture.glsl"));
+        m_shaderLibrary.load("assets/shaders/vertexColor.glsl");
+        m_shaderLibrary.load("assets/shaders/texture.glsl");
 
         m_cupheadTexture = Bistro::Texture2D::create("assets/textures/Cuphead.png");
-        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_textureShader)->bind();
-        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_textureShader)->uploadUniformInt("u_texture", 0);
+        m_shaderLibrary.get("texture")->bind();
+        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_shaderLibrary.get("texture"))->
+                uploadUniformInt("u_texture", 0);
     }
 
     void onUpdate(Bistro::Timestep ts) override {
@@ -105,20 +105,21 @@ public:
 
         Bistro::Renderer::beginScene(m_camera);
 
-        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_shader)->bind();
-        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_shader)->uploadUniformFloat4("u_color", m_rectColor);
+        m_shaderLibrary.get("vertexColor")->bind();
+        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_shaderLibrary.get("vertexColor"))->
+                uploadUniformFloat4("u_color", m_rectColor);
 
         for (int i = 0; i < 20; ++i) {
             for (int j = 0; j < 20; ++j) {
                 glm::vec3 pos = {j * 0.11f, i * 0.11f, 0.0f};
                 glm::mat4 t = glm::translate(glm::mat4(1.0f), pos) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-                Bistro::Renderer::submit(m_shader, m_squareVertexArray, t);
+                Bistro::Renderer::submit(m_shaderLibrary.get("vertexColor"), m_squareVertexArray, t);
             }
         }
 
         // Textured rect
         m_cupheadTexture->bind();
-        Bistro::Renderer::submit(m_textureShader, m_squareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
+        Bistro::Renderer::submit(m_shaderLibrary.get("texture"), m_squareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 
         // Triangle
 //        Bistro::Renderer::submit(m_shader, m_vertexArray, transform);
@@ -143,8 +144,7 @@ public:
     }
 
 private:
-    Bistro::Ref<Bistro::Shader> m_shader, m_textureShader;
-//    Bistro::Ref<Bistro::VertexArray> m_vertexArray;
+    Bistro::ShaderLibrary m_shaderLibrary;
     Bistro::Ref<Bistro::VertexArray> m_squareVertexArray;
 
     Bistro::Ref<Bistro::Texture2D> m_cupheadTexture;

@@ -8,7 +8,7 @@
 #include <memory>
 
 #define B_ASSERT(x, ...) { if (!x) { B_ERROR("ASSERTION FAILED: {0}", __VA_ARGS__); raise(SIGTRAP); } }
-#define B_CORE_ASSERT(x, ...) { if (!x) { B_CORE_CRITICAL("ASSERTION FAILED: {0}", __VA_ARGS__); raise(SIGTRAP); } }
+#define B_CORE_ASSERT(x, ...) { if (!(x)) { B_CORE_CRITICAL("ASSERTION FAILED: {0}", __VA_ARGS__); raise(SIGTRAP); } }
 
 #define BIT(x) (1 << x)
 

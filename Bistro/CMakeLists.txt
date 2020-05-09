@@ -47,12 +47,6 @@ endif()
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC GLFW_INCLUDE_NONE)
 
-# Copy over shader files
-configure_file(${PROJECT_SOURCE_DIR}/src/Shaders/vertex.glsl ${CMAKE_CURRENT_BINARY_DIR}/Shaders COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/src/Shaders/textureVertex.glsl ${CMAKE_CURRENT_BINARY_DIR}/Shaders COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/src/Shaders/fragment.glsl ${CMAKE_CURRENT_BINARY_DIR}/Shaders COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/src/Shaders/textureFragment.glsl ${CMAKE_CURRENT_BINARY_DIR}/Shaders COPYONLY)
-
 # Set include directories
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/Bistro)

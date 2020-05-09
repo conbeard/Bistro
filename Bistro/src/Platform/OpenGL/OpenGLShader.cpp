@@ -19,7 +19,7 @@ namespace Bistro {
         return GL_FALSE;
     }
 
-    OpenGLShader::OpenGLShader(const std::string &vertexSrc, const std::string &fragmentSrc) {
+    OpenGLShader::OpenGLShader(const std::string &name, const std::string &vertexSrc, const std::string &fragmentSrc) : m_name(name) {
         std::unordered_map<GLenum, std::string> sources;
         sources[GL_VERTEX_SHADER] = vertexSrc;
         sources[GL_FRAGMENT_SHADER] = fragmentSrc;
@@ -30,6 +30,12 @@ namespace Bistro {
         std::string shaderSrc = readFile(filepath);
         auto sources = preprocess(shaderSrc);
         compile(sources);
+
+        auto lastSlash = filepath.find_last_of("/\\");
+        lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+        auto lastDot = filepath.rfind('.');
+        lastDot = lastDot == std::string::npos ? filepath.size() : lastDot;
+        m_name = filepath.substr(lastSlash, lastDot - lastSlash);
     }
 
     OpenGLShader::~OpenGLShader() {
@@ -81,7 +87,7 @@ namespace Bistro {
 
     std::string OpenGLShader::readFile(const std::string &filepath) {
         std::string result;
-        std::ifstream file(filepath, std::ios::in & std::ios::binary);
+        std::ifstream file(filepath, std::ios::in | std::ios::binary);
         if (file) {
             file.seekg(0, std::ios::end);
             result.resize(file.tellg());
@@ -106,7 +112,7 @@ namespace Bistro {
             B_CORE_ASSERT((eol != std::string::npos), "Shader Syntax Error");
             size_t begin = pos + typeTokenLength + 1;
             std::string type = shaderSrc.substr(begin, eol - begin);
-            B_CORE_ASSERT((type == "vertex" || type == "fragment" || type == "pixel"), "Invalid Shader Type!");
+            B_CORE_ASSERT(type == "vertex" || type == "fragment" || type == "pixel", "Invalid Shader Type!");
 
             size_t nextLinePos = shaderSrc.find_first_not_of("\n", eol);
             pos = shaderSrc.find(typeToken, nextLinePos);
@@ -119,11 +125,13 @@ namespace Bistro {
 
     void OpenGLShader::compile(const std::unordered_map<GLenum, std::string> &shaderSrcs) {
         GLuint program = glCreateProgram();
-        std::vector<GLuint> shaders(shaderSrcs.size());
+        B_CORE_ASSERT(shaderSrcs.size() <= 2, "Too many shaders!");
+        std::array<GLuint, 2> shaders{};
+        size_t idx = 0;
 
         for (auto&& [type, source]: shaderSrcs) {
             GLuint shader = glCreateShader(type);
-            shaders.push_back(shader);
+            shaders[idx] = shader;
 
             const auto *sourceCStr = (const GLchar *)source.c_str();
             glShaderSource(shader, 1, &sourceCStr, 0);
@@ -149,6 +157,7 @@ namespace Bistro {
             }
 
             glAttachShader(program, shader);
+            idx++;
         }
 
         m_rendererID = program;

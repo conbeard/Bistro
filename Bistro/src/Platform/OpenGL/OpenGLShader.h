@@ -14,12 +14,14 @@ namespace Bistro {
 
     class OpenGLShader : public Shader {
     public:
-        OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+        OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
         OpenGLShader(const std::string& filepath);
         virtual ~OpenGLShader();
 
         void bind() const override;
         void unbind() const override;
+
+        const std::string& getName() const override { return m_name; }
 
         void uploadUniformInt(const std::string &name, int value) const;
 
@@ -37,6 +39,7 @@ namespace Bistro {
         void compile(const std::unordered_map<GLenum, std::string>& shaderSrcs);
     private:
         uint32_t m_rendererID;
+        std::string m_name;
     };
 }
 
