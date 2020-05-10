@@ -31,11 +31,13 @@ namespace Bistro {
         static inline Application& get() { return *s_instance; }
         inline Window& getWindow() { return *m_window; }
     private:
-        bool onWindowClose(WindowCloseEvent);
+        bool onWindowClose(WindowCloseEvent& event);
+        bool onWindowResize(WindowResizeEvent& event);
 
         Scope<Window> m_window;
         ImGuiLayer* m_imguiLayer;
         bool m_running = true;
+        bool m_minimized = false;
         LayerStack m_layerStack;
         float m_lastFrameTime;
 

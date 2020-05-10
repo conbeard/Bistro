@@ -34,12 +34,14 @@ namespace Bistro {
             Timestep timestep = time - m_lastFrameTime;
             m_lastFrameTime = time;
 
-            for (Layer* layer : m_layerStack)
-                layer->onUpdate(timestep);
+            if (!m_minimized) {
+                for (Layer *layer : m_layerStack)
+                    layer->onUpdate(timestep);
+            }
 
             // Render ImGui
             m_imguiLayer->begin();
-            for (Layer* layer : m_layerStack)
+            for (Layer *layer : m_layerStack)
                 layer->onImGuiRender();
             m_imguiLayer->end();
 
@@ -51,6 +53,7 @@ namespace Bistro {
         EventDispatcher dispatcher(e);
 
         dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::onWindowClose));
+        dispatcher.dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::onWindowResize));
 
         for (auto it = m_layerStack.end(); it != m_layerStack.begin(); ) {
             (*--it)->onEvent(e);
@@ -68,8 +71,18 @@ namespace Bistro {
         overlay->onAttach();
     }
 
-    bool Application::onWindowClose(WindowCloseEvent) {
+    bool Application::onWindowClose(WindowCloseEvent& event) {
         m_running = false;
         return true;
+    }
+
+    bool Application::onWindowResize(WindowResizeEvent& event) {
+        if (event.getWidth() == 0 || event.getHeight() == 0) {
+            m_minimized = true;
+            return false;
+        }
+        Renderer::onWindowResize(event.getWidth(), event.getHeight());
+        m_minimized = false;
+        return false;
     }
 }
