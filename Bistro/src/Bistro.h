@@ -11,6 +11,7 @@
 #include "Bistro/Input.h"
 #include "Bistro/Layer.h"
 #include "Bistro/Core/Log.h"
+#include "Bistro/OrthographicCameraController.h"
 
 #include "Bistro/Core/Timestep.h"
 

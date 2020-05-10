@@ -11,30 +11,7 @@
 
 class ExampleLayer : public Bistro::Layer {
 public:
-    ExampleLayer() : Layer("Example"), m_camera(-1.28f, 1.28f, -0.72f, 0.72f), m_cameraPosition(0.0f), m_trianglePosition(0.0f) {
-
-//        m_vertexArray.reset(Bistro::VertexArray::create());
-//
-//        float vertices[3 * 3] = {
-//                -0.5f,  -0.5f,  0.0f,
-//                0.0f,  -0.5f,  0.0f,
-//                -0.25f,  0.5f,  0.0f
-//        };
-//
-//        Bistro::Ref<Bistro::VertexBuffer> triangleVB;
-//        Bistro::Ref<Bistro::IndexBuffer> triangleIB;
-//
-//        triangleVB.reset(Bistro::VertexBuffer::create(vertices, sizeof(vertices)));
-//        Bistro::BufferLayout layout = {
-//                { Bistro::ShaderDataType::Float3, "a_position" },
-//        };
-//        triangleVB->setLayout(layout);
-//        m_vertexArray->addVertexBuffer(triangleVB);
-//
-//        uint32_t indices[3] = { 0, 1, 2 };
-//        triangleIB.reset(Bistro::IndexBuffer::create(indices, 3));
-//        m_vertexArray->setIndexBuffer(triangleIB);
-
+    ExampleLayer() : Layer("Example"), m_cameraController(1280.0f / 720.0f) {
 
         float rectVertices[5 * 4] = {
                 -0.5f,  -0.5f,  0.0f, 0.0f, 0.0f,
@@ -70,40 +47,11 @@ public:
 
     void onUpdate(Bistro::Timestep ts) override {
         B_TRACE("FPS: {0}, Delta time: {1}ms", 1.0f / ts.getSeconds(), ts.getMilliseconds());
-
         Bistro::RenderCommand::setClearColor({0.4, 1, 1, 1});
         Bistro::RenderCommand::clear();
+        Bistro::Renderer::beginScene(m_cameraController.getCamera());
 
-        // WASD QE Camera controls
-        if (Bistro::Input::isKeyPressed(B_KEY_A))
-            m_cameraPosition.x -= m_cameraSpeed * ts;
-        if (Bistro::Input::isKeyPressed(B_KEY_D))
-            m_cameraPosition.x += m_cameraSpeed * ts;
-        if (Bistro::Input::isKeyPressed(B_KEY_S))
-            m_cameraPosition.y -= m_cameraSpeed * ts;
-        if (Bistro::Input::isKeyPressed(B_KEY_W))
-            m_cameraPosition.y += m_cameraSpeed * ts;
-        if (Bistro::Input::isKeyPressed(B_KEY_Q))
-            m_cameraRotation += m_cameraSpeed * ts;
-        if (Bistro::Input::isKeyPressed(B_KEY_E))
-            m_cameraRotation -= m_cameraSpeed * ts;
-
-        // TFGH triangle controls
-        if (Bistro::Input::isKeyPressed(B_KEY_H))
-            m_trianglePosition.x += m_cameraSpeed * ts;
-        if (Bistro::Input::isKeyPressed(B_KEY_F))
-            m_trianglePosition.x -= m_cameraSpeed * ts;
-        if (Bistro::Input::isKeyPressed(B_KEY_T))
-            m_trianglePosition.y += m_cameraSpeed * ts;
-        if (Bistro::Input::isKeyPressed(B_KEY_G))
-            m_trianglePosition.y -= m_cameraSpeed * ts;
-
-        m_camera.setPosition(m_cameraPosition);
-        m_camera.setRotation(m_cameraRotation);
-
-        glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_trianglePosition);
-
-        Bistro::Renderer::beginScene(m_camera);
+        m_cameraController.onUpdate(ts);
 
         m_shaderLibrary.get("vertexColor")->bind();
         std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_shaderLibrary.get("vertexColor"))->
@@ -121,15 +69,11 @@ public:
         m_cupheadTexture->bind();
         Bistro::Renderer::submit(m_shaderLibrary.get("texture"), m_squareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 
-        // Triangle
-//        Bistro::Renderer::submit(m_shader, m_vertexArray, transform);
-
         Bistro::Renderer::endScene();
     }
 
     void onEvent(Bistro::Event& e) override {
-        Bistro::EventDispatcher dispatcher(e);
-        dispatcher.dispatch<Bistro::KeyPressedEvent>(BIND_EVENT_FN(ExampleLayer::onKeyPressed));
+        m_cameraController.onEvent(e);
 
     }
 
@@ -139,22 +83,14 @@ public:
         ImGui::End();
     }
 
-    bool onKeyPressed(Bistro::KeyPressedEvent& event) {
-        return false;
-    }
-
 private:
     Bistro::ShaderLibrary m_shaderLibrary;
     Bistro::Ref<Bistro::VertexArray> m_squareVertexArray;
 
     Bistro::Ref<Bistro::Texture2D> m_cupheadTexture;
 
-    Bistro::OrthographicCamera m_camera;
-    glm::vec3 m_cameraPosition;
-    float m_cameraRotation = 0.0f;
-    float m_cameraSpeed = 2.0f;
+    Bistro::OrthographicCameraController m_cameraController;
 
-    glm::vec3 m_trianglePosition;
     glm::vec4 m_rectColor = {0.2f, 0.3f, 0.8f, 1.0f};
 };
 

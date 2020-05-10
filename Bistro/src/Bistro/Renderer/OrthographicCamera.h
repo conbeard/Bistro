@@ -15,6 +15,7 @@ namespace Bistro {
 
         void setPosition(const glm::vec3& pos) { m_position = pos; recalculateViewMatrix(); }
         void setRotation(float rot) { m_rotation = rot; recalculateViewMatrix(); }
+        void setProjection(float left, float right, float bottom, float top);
 
         const glm::vec3& getPosition() const { return m_position; }
         float getRotation() const { return m_rotation; }
