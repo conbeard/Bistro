@@ -45,7 +45,7 @@
 //        m_cupheadTexture = Bistro::Texture2D::create("assets/textures/Cuphead.png");
 //        m_shaderLibrary.get("texture")->bind();
 //        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_shaderLibrary.get("texture"))->
-//                uploadUniformInt("u_texture", 0);
+//                setInt("u_texture", 0);
 //    }
 //
 //    void onUpdate(Bistro::Timestep ts) override {
@@ -58,7 +58,7 @@
 //
 //        m_shaderLibrary.get("vertexColor")->bind();
 //        std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_shaderLibrary.get("flatColor"))->
-//                uploadUniformFloat4("u_color", m_rectColor);
+//                setFloat4("u_color", m_rectColor);
 //
 //        for (int i = 0; i < 20; ++i) {
 //            for (int j = 0; j < 20; ++j) {

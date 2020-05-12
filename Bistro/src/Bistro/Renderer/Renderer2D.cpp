@@ -54,7 +54,7 @@ namespace Bistro {
 
     void Renderer2D::beginScene(OrthographicCamera &camera) {
         s_data->flatColorShader->bind();
-        s_data->flatColorShader->uploadUniformMat4("u_viewProjection", camera.getViewProjectionMatrix());
+        s_data->flatColorShader->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
     }
 
     void Renderer2D::endScene() {
@@ -66,10 +66,11 @@ namespace Bistro {
     }
 
     void Renderer2D::drawQuad(const glm::vec3 &position, const glm::vec2 &size, const glm::vec4 &color) {
-        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
+                glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
         s_data->flatColorShader->bind();
-        s_data->flatColorShader->uploadUniformFloat4("u_color", color);
-        s_data->flatColorShader->uploadUniformMat4("u_transform", transform);
+        s_data->flatColorShader->setFloat4("u_color", color);
+        s_data->flatColorShader->setMat4("u_transform", transform);
         s_data->quadVertexArray->bind();
         RenderCommand::drawIndexed(s_data->quadVertexArray);
     }

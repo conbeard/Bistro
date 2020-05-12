@@ -35,8 +35,8 @@ namespace Bistro {
 
     void Renderer::submit(const Ref<Shader> &shader, const Ref<VertexArray> &vertexArray, const glm::mat4& transform) {
         shader->bind();
-        shader->uploadUniformMat4("u_viewProjection", s_sceneData->viewProjectMatrix);
-        shader->uploadUniformMat4("u_transform", transform);
+        shader->setMat4("u_viewProjection", s_sceneData->viewProjectMatrix);
+        shader->setMat4("u_transform", transform);
 
         vertexArray->bind();
         RenderCommand::drawIndexed(vertexArray);
