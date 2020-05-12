@@ -37,10 +37,6 @@ void Sandbox2D::onAttach() {
     m_vertexArray->setIndexBuffer(squareIB);
 
     m_flatColorShader = Bistro::Shader::create("assets/shaders/flatColor.glsl");
-
-    m_texture = Bistro::Texture2D::create("assets/textures/Cuphead.png");
-    m_flatColorShader->bind();
-    std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_flatColorShader)->uploadUniformInt("u_texture", 0);
 }
 
 void Sandbox2D::onDetach() {
@@ -57,8 +53,7 @@ void Sandbox2D::onUpdate(Bistro::Timestep ts) {
     Bistro::Renderer::beginScene(m_cameraController.getCamera());
 
     m_flatColorShader->bind();
-    std::dynamic_pointer_cast<Bistro::OpenGLShader>(m_flatColorShader)->
-            uploadUniformFloat4("u_color", m_rectColor);
+    m_flatColorShader->uploadUniformFloat4("u_color", m_rectColor);
 
     for (int i = 0; i < 20; ++i) {
         for (int j = 0; j < 20; ++j) {

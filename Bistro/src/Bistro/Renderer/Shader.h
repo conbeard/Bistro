@@ -7,6 +7,8 @@
 
 #include "Bistro/Core/Core.h"
 
+#include <glm/glm.hpp>
+
 namespace Bistro {
 
     class Shader {
@@ -17,6 +19,16 @@ namespace Bistro {
         virtual void unbind() const = 0;
 
         virtual const std::string& getName() const = 0;
+
+        virtual void uploadUniformInt(const std::string &name, int value) const = 0;
+
+        virtual void uploadUniformFloat(const std::string &name, float values) const = 0;
+        virtual void uploadUniformFloat2(const std::string &name, const glm::vec2 &values) const = 0;
+        virtual void uploadUniformFloat3(const std::string &name, const glm::vec3 &values) const = 0;
+        virtual void uploadUniformFloat4(const std::string &name, const glm::vec4 &values) const = 0;
+
+        virtual void uploadUniformMat3(const std::string &name, const glm::mat3 &matrix) const = 0;
+        virtual void uploadUniformMat4(const std::string &name, const glm::mat4 &matrix) const = 0;
 
         static Ref<Shader> create(const std::string& filepath);
         static Ref<Shader> create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);

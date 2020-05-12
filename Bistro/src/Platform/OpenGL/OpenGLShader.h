@@ -23,15 +23,15 @@ namespace Bistro {
 
         const std::string& getName() const override { return m_name; }
 
-        void uploadUniformInt(const std::string &name, int value) const;
+        void uploadUniformInt(const std::string &name, int value) const override;
 
-        void uploadUniformFloat(const std::string &name, float values) const;
-        void uploadUniformFloat2(const std::string &name, const glm::vec2 &values) const;
-        void uploadUniformFloat3(const std::string &name, const glm::vec3 &values) const;
-        void uploadUniformFloat4(const std::string &name, const glm::vec4 &values) const;
+        void uploadUniformFloat(const std::string &name, float values) const override;
+        void uploadUniformFloat2(const std::string &name, const glm::vec2 &values) const override;
+        void uploadUniformFloat3(const std::string &name, const glm::vec3 &values) const override;
+        void uploadUniformFloat4(const std::string &name, const glm::vec4 &values) const override;
 
-        void uploadUniformMat3(const std::string &name, const glm::mat3 &matrix) const;
-        void uploadUniformMat4(const std::string &name, const glm::mat4 &matrix) const;
+        void uploadUniformMat3(const std::string &name, const glm::mat3 &matrix) const override;
+        void uploadUniformMat4(const std::string &name, const glm::mat4 &matrix) const override;
 
     private:
         std::string readFile(const std::string& filepath);
