@@ -26,7 +26,9 @@ namespace Bistro {
         pushOverlay(m_imguiLayer);
     }
 
-    Application::~Application() = default;
+    Application::~Application() {
+        Renderer::shutdown();
+    };
 
     void Application::Run() {
         while (m_running) {

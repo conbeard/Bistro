@@ -21,6 +21,7 @@
 #include "Bistro/ImGui/ImGuiLayer.h"
 
 #include "Bistro/Renderer/Renderer.h"
+#include "Bistro/Renderer/Renderer2D.h"
 #include "Bistro/Renderer/RenderCommand.h"
 
 #include "Bistro/Renderer/Buffer.h"

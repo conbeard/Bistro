@@ -5,8 +5,8 @@
 #include "bpch.h"
 #include "Renderer.h"
 
-#include "RenderCommand.h"
-#include "Platform/OpenGL/OpenGLShader.h"
+#include "Bistro/Renderer/Renderer2D.h"
+#include "Bistro/Renderer/RenderCommand.h"
 
 namespace Bistro {
 
@@ -14,6 +14,11 @@ namespace Bistro {
 
     void Renderer::init() {
         RenderCommand::init();
+        Renderer2D::init();
+    }
+
+    void Renderer::shutdown() {
+        Renderer2D::shutdown();
     }
 
     void Renderer::onWindowResize(uint32_t width, uint32_t height) {
@@ -30,8 +35,8 @@ namespace Bistro {
 
     void Renderer::submit(const Ref<Shader> &shader, const Ref<VertexArray> &vertexArray, const glm::mat4& transform) {
         shader->bind();
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_viewProjection", s_sceneData->viewProjectMatrix);
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_transform", transform);
+        shader->uploadUniformMat4("u_viewProjection", s_sceneData->viewProjectMatrix);
+        shader->uploadUniformMat4("u_transform", transform);
 
         vertexArray->bind();
         RenderCommand::drawIndexed(vertexArray);

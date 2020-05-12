@@ -12,6 +12,7 @@ set(BISTRO_SOURCES
         src/Bistro/Renderer/Shader.cpp
         src/Bistro/Renderer/Buffer.cpp
         src/Bistro/Renderer/Renderer.cpp
+        src/Bistro/Renderer/Renderer2D.cpp
         src/Bistro/Renderer/RendererAPI.cpp
         src/Bistro/Renderer/RenderCommand.cpp
         src/Bistro/Renderer/Texture.cpp
