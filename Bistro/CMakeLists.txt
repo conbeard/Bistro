@@ -4,8 +4,8 @@ project(bistro-engine)
 set(BISTRO_SOURCES
         src/Bistro/Core/Application.cpp
         src/Bistro/Core/Log.cpp
-        src/Bistro/Layer.cpp
-        src/Bistro/LayerStack.cpp
+        src/Bistro/Core/Layer.cpp
+        src/Bistro/Core/LayerStack.cpp
         src/Bistro/OrthographicCameraController.cpp
         src/Bistro/ImGui/ImGuiLayer.cpp
         src/Bistro/ImGui/ImGuiBuild.cpp

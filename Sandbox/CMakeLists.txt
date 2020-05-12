@@ -2,7 +2,8 @@ project(bistro-sandbox)
 
 # Add source files
 set(SANDBOX_SOURCES
-        src/main.cpp
+    src/main.cpp
+    src/Sandbox2D.cpp
 )
 
 # Add executable

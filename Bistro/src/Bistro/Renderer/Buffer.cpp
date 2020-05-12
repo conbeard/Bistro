@@ -12,26 +12,26 @@
 
 namespace Bistro {
 
-    VertexBuffer* VertexBuffer::create(float* vertices, uint32_t size) {
+    Ref<VertexBuffer> VertexBuffer::create(float* vertices, uint32_t size) {
         switch (Renderer::getAPI()) {
             case RendererAPI::API::None:
                 B_CORE_ASSERT(false, "RendererAPI::API::None is not supported");
                 return nullptr;
             case RendererAPI::API::OpenGL:
-                return new OpenGLVertexBuffer(vertices, size);
+                return std::make_shared<OpenGLVertexBuffer>(vertices, size);
             default:
                 B_CORE_ASSERT(false, "Unknown RendererAPI");
                 return nullptr;
         }
     }
 
-    IndexBuffer* IndexBuffer::create(uint32_t* indices, uint32_t count) {
+    Ref<IndexBuffer> IndexBuffer::create(uint32_t* indices, uint32_t count) {
         switch (Renderer::getAPI()) {
             case RendererAPI::API::None:
             B_CORE_ASSERT(false, "RendererAPI::API::None is not supported");
                 return nullptr;
             case RendererAPI::API::OpenGL:
-                return new OpenGLIndexBuffer(indices, count);
+                return std::make_shared<OpenGLIndexBuffer>(indices, count);
             default:
             B_CORE_ASSERT(false, "Unknown RendererAPI");
                 return nullptr;

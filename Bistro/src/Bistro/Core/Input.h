@@ -5,7 +5,7 @@
 #ifndef BISTRO_INPUT_H
 #define BISTRO_INPUT_H
 
-#include "Bistro/Core/Core.h"
+#include "Core.h"
 
 namespace Bistro {
 

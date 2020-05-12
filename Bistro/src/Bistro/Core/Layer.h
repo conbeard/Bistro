@@ -6,7 +6,7 @@
 #define BISTRO_LAYER_H
 
 #include "Bistro/Core/Core.h"
-#include "Events/Event.h"
+#include "Bistro/Events/Event.h"
 #include "Bistro/Core/Timestep.h"
 
 namespace Bistro {

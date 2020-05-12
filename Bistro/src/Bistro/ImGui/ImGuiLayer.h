@@ -8,7 +8,7 @@
 #include <Bistro/Events/KeyEvent.h>
 #include <Bistro/Events/MouseEvent.h>
 #include <Bistro/Events/ApplicationEvent.h>
-#include "Bistro/Layer.h"
+#include "Bistro/Core/Layer.h"
 
 namespace Bistro {
 

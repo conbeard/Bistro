@@ -128,7 +128,7 @@ namespace Bistro {
         virtual void setLayout(const BufferLayout& layout) = 0;
         virtual const BufferLayout& getLayout() = 0;
 
-        static VertexBuffer* create(float* vertices, uint32_t size);
+        static Ref<VertexBuffer> create(float* vertices, uint32_t size);
     };
 
 
@@ -141,7 +141,7 @@ namespace Bistro {
 
         virtual uint32_t getCount() const = 0;
 
-        static IndexBuffer* create(uint32_t* indices, uint32_t count);
+        static Ref<IndexBuffer> create(uint32_t* indices, uint32_t count);
     };
 }
 

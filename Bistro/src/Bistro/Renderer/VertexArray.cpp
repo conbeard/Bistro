@@ -10,12 +10,12 @@
 
 namespace Bistro {
 
-    VertexArray *VertexArray::create() {
+    Ref<VertexArray> VertexArray::create() {
         switch (Renderer::getAPI()) {
             case RendererAPI::API::None: B_CORE_ASSERT(false, "RendererAPI::API::None is not supported");
                 return nullptr;
             case RendererAPI::API::OpenGL:
-                return new OpenGLVertexArray();
+                return std::make_shared<OpenGLVertexArray>();
             default: B_CORE_ASSERT(false, "Unknown RendererAPI");
                 return nullptr;
         }

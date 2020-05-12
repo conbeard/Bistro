@@ -5,9 +5,9 @@
 #include "bpch.h"
 #include "OrthographicCameraController.h"
 
-#include "Bistro/Input.h"
-#include "Bistro/KeyCodes.h"
-#include "Bistro/MouseButtonCodes.h"
+#include "Bistro/Core/Input.h"
+#include "Bistro/Core/KeyCodes.h"
+#include "Bistro/Core/MouseButtonCodes.h"
 
 namespace Bistro {
 

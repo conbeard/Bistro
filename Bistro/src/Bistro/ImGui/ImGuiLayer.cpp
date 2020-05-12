@@ -7,8 +7,8 @@
 
 #include "Bistro/Core/Core.h"
 #include "Bistro/Core/Log.h"
-#include "Bistro/KeyCodes.h"
-#include "Bistro/MouseButtonCodes.h"
+#include "Bistro/Core/KeyCodes.h"
+#include "Bistro/Core/MouseButtonCodes.h"
 #include "Bistro/Events/Event.h"
 #include "Bistro/Events/KeyEvent.h"
 
