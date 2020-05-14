@@ -12,7 +12,7 @@
 Sandbox2D::Sandbox2D() : Bistro::Layer("Sandbox2D"), m_cameraController(1280.0f / 720.0f) {}
 
 void Sandbox2D::onAttach() {
-
+    m_texture = Bistro::Texture2D::create("assets/textures/Cuphead.png");
 }
 
 void Sandbox2D::onDetach() {
@@ -28,13 +28,13 @@ void Sandbox2D::onUpdate(Bistro::Timestep ts) {
     Bistro::RenderCommand::clear();
 
     Bistro::Renderer2D::beginScene(m_cameraController.getCamera());
-//    Bistro::Renderer2D::drawQuad({0.0f, 0.0f}, {1.0f, 0.5f}, m_rectColor);
     for (int i = 0; i < 20; ++i) {
         for (int j = 0; j < 20; ++j) {
             glm::vec3 pos = {j * 0.11f, i * 0.11f, 0.0f};
             Bistro::Renderer2D::drawQuad(pos, {0.1f, 0.1f}, m_rectColor);
         }
     }
+    Bistro::Renderer2D::drawQuad({1.05f, 1.05f, 0.1f}, {2.2f, 2.2f}, m_texture);
     Bistro::Renderer2D::endScene();
 }
 
