@@ -15,8 +15,8 @@ namespace Bistro {
 
     struct Renderer2DStorage {
         Ref<VertexArray> quadVertexArray;
-        Ref<Shader> flatColorShader;
         Ref<Shader> textureShader;
+        Ref<Texture2D> whiteTexture;
     };
 
     static Renderer2DStorage* s_data;
@@ -47,7 +47,10 @@ namespace Bistro {
         squareIB = IndexBuffer::create(rectIndices, 6);
         s_data->quadVertexArray->setIndexBuffer(squareIB);
 
-        s_data->flatColorShader = Shader::create("assets/shaders/flatColor.glsl");
+        s_data->whiteTexture = Texture2D::create(1, 1);
+        uint32_t whiteTextureData = 0xffffffff;
+        s_data->whiteTexture->setData(&whiteTextureData, sizeof(whiteTextureData));
+
         s_data->textureShader = Shader::create("assets/shaders/texture.glsl");
         s_data->textureShader->bind();
         s_data->textureShader->setInt("u_texture", 0);
@@ -58,9 +61,6 @@ namespace Bistro {
     }
 
     void Renderer2D::beginScene(OrthographicCamera &camera) {
-        s_data->flatColorShader->bind();
-        s_data->flatColorShader->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
-
         s_data->textureShader->bind();
         s_data->textureShader->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
     }
@@ -76,9 +76,9 @@ namespace Bistro {
     void Renderer2D::drawQuad(const glm::vec3 &position, const glm::vec2 &size, const glm::vec4 &color) {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
                 glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
-        s_data->flatColorShader->bind();
-        s_data->flatColorShader->setFloat4("u_color", color);
-        s_data->flatColorShader->setMat4("u_transform", transform);
+        s_data->textureShader->setMat4("u_transform", transform);
+        s_data->textureShader->setFloat4("u_color", color);
+        s_data->whiteTexture->bind();
         s_data->quadVertexArray->bind();
         RenderCommand::drawIndexed(s_data->quadVertexArray);
     }
@@ -90,8 +90,8 @@ namespace Bistro {
     void Renderer2D::drawQuad(const glm::vec3 &position, const glm::vec2 &size, const Ref<Texture2D> &texture) {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
                               glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
-        s_data->textureShader->bind();
         s_data->textureShader->setMat4("u_transform", transform);
+        s_data->textureShader->setFloat4("u_color", glm::vec4(1.0f));
         texture->bind();
         s_data->quadVertexArray->bind();
         RenderCommand::drawIndexed(s_data->quadVertexArray);
