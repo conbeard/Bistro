@@ -19,10 +19,15 @@ public:
     void onEvent(Bistro::Event& event) override;
 
 private:
-    Bistro::Ref<Bistro::Shader> m_flatColorShader;
     Bistro::Ref<Bistro::Texture2D> m_texture;
-    Bistro::Ref<Bistro::VertexArray> m_vertexArray;
     Bistro::OrthographicCameraController m_cameraController;
+
+    struct ProfileResult {
+        const char* name;
+        float time;
+    };
+
+    std::vector<ProfileResult> m_profileResults;
 
     glm::vec4 m_rectColor = {0.2f, 0.3f, 0.8f, 1.0f};
 };

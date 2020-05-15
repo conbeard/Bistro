@@ -79,9 +79,4 @@ namespace Bistro {
             glfwMakeContextCurrent(backup_current_context);
         }
     }
-
-    void ImGuiLayer::onImGuiRender() {
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
-    }
 }
