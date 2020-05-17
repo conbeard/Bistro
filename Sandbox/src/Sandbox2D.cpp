@@ -9,38 +9,6 @@
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
-template<typename Fn>
-class Timer {
-public:
-    Timer(const char* name, Fn&& func) : m_name(name), m_func(func), m_stopped(false) {
-        m_startTimepoint = std::chrono::high_resolution_clock::now();
-    }
-
-    ~Timer() {
-        if (!m_stopped) stop();
-    }
-
-    void stop() {
-        auto endTimepoint = std::chrono::high_resolution_clock::now();
-
-        long long start = std::chrono::time_point_cast<std::chrono::microseconds>(m_startTimepoint).time_since_epoch().count();
-        long long end = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch().count();
-
-        m_stopped = true;
-        float duration = (end - start) * 0.001f;
-
-        m_func({m_name, duration});
-    }
-
-private:
-    const char* m_name;
-    Fn m_func;
-    std::chrono::time_point<std::chrono::steady_clock> m_startTimepoint;
-    bool m_stopped;
-};
-
-#define PROFILE_SCOPE(name) Timer timer##__LINE__(name, [&](ProfileResult profileResult) { m_profileResults.push_back(profileResult); })
-
 Sandbox2D::Sandbox2D() : Bistro::Layer("Sandbox2D"), m_cameraController(1280.0f / 720.0f) {}
 
 void Sandbox2D::onAttach() {
@@ -52,23 +20,23 @@ void Sandbox2D::onDetach() {
 }
 
 void Sandbox2D::onUpdate(Bistro::Timestep ts) {
-    PROFILE_SCOPE("Sandbox2D::onUpdate");
+    B_PROFILE_FUNCTION();
 
     // Update
     {
-        PROFILE_SCOPE("CameraController::onUpdate");
+        B_PROFILE_SCOPE("CameraController::onUpdate");
         m_cameraController.onUpdate(ts);
     }
 
     // Render
     {
-        PROFILE_SCOPE("Set Clear Color");
+        B_PROFILE_SCOPE("Set Clear Color");
         Bistro::RenderCommand::setClearColor({0.4, 1, 1, 1});
         Bistro::RenderCommand::clear();
     }
 
     {
-        PROFILE_SCOPE("Draw scene");
+        B_PROFILE_SCOPE("Draw scene");
         Bistro::Renderer2D::beginScene(m_cameraController.getCamera());
         for (int i = 0; i < 20; ++i) {
             for (int j = 0; j < 20; ++j) {
@@ -82,21 +50,13 @@ void Sandbox2D::onUpdate(Bistro::Timestep ts) {
 }
 
 void Sandbox2D::onImGuiRender() {
+    B_PROFILE_FUNCTION();
     ImGui::Begin("Settings");
     ImGui::ColorEdit4("Rect color", glm::value_ptr(m_rectColor));
-
-    for (auto& result : m_profileResults) {
-        char label[50];
-        strcpy(label, "%.3fms ");
-        strcat(label, result.name);
-
-        ImGui::Text(label, result.time);
-    }
-    m_profileResults.clear();
-
     ImGui::End();
 }
 
 void Sandbox2D::onEvent(Bistro::Event &event) {
+    B_PROFILE_FUNCTION();
     m_cameraController.onEvent(event);
 }

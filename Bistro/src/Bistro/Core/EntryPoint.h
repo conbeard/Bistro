@@ -13,9 +13,17 @@ int main(int argc, char** argv) {
     Bistro::Log::Init();
     B_CORE_INFO("Welcome to Bistro!");
 
+    B_PROFILE_BEGIN_SESSION("Startup", "BistroProfile-startup.json");
     auto app = Bistro::CreateApplication();
+    B_PROFILE_END_SESSION();
+
+    B_PROFILE_BEGIN_SESSION("Runtime", "BistroProfile-runtime.json");
     app->Run();
+    B_PROFILE_END_SESSION();
+
+    B_PROFILE_BEGIN_SESSION("Shutdown", "BistroProfile-shutdown.json");
     delete app;
+    B_PROFILE_END_SESSION();
 }
 
 

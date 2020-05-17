@@ -20,4 +20,6 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "Bistro/Debug/Instrumentor.h"
+
 #endif //BISTRO_BPCH_H
