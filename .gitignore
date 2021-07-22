@@ -2,6 +2,22 @@
 # Created by https://www.gitignore.io/api/c++,cmake,clion
 # Edit at https://www.gitignore.io/?templates=c++,cmake,clion
 
+### Bistro ###
+# Executable
+bistro-sandbox
+
+# Profiling
+*Profile-runtime.json
+*Profile-shutdown.json
+*Profile-startup.json
+*.ini
+
+# Code Blocks project file (?)
+*.cbp
+
+# CLion
+.idea/
+
 ### C++ ###
 # Prerequisites
 *.d

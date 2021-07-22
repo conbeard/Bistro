@@ -32,8 +32,8 @@ add_library(${PROJECT_NAME} STATIC ${BISTRO_SOURCES})
 add_library(Bistro::Engine ALIAS ${PROJECT_NAME})
 
 # Platform specific preprocessor defines
-# PUBLIC  = define is visible to the user of Hazel
-# PRIVATE = define is visible Hazel only
+# PUBLIC  = define is visible to the user of Bistro
+# PRIVATE = define is visible Bistro only
 if (WIN32)
     target_compile_definitions(${PROJECT_NAME} PUBLIC B_PLATFORM_WINDOWS=1)
     target_compile_definitions(${PROJECT_NAME} PRIVATE B_BUILD_DLL=1)
@@ -58,10 +58,39 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 # Precompiled Headers
 target_precompile_headers(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/bpch.h")
 
+#============================================
+# Dependencies
+#============================================
 find_package(spdlog REQUIRED)
-find_package(glfw3 REQUIRED)
+
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(vendor/glfw)
+
 add_subdirectory(vendor/glad)
-add_subdirectory(vendor/imgui)
+
+add_library(imgui SHARED
+        vendor/imgui/imgui.h
+        vendor/imgui/imconfig.h
+        vendor/imgui/imgui_internal.h
+        vendor/imgui/imstb_rectpack.h
+        vendor/imgui/imstb_textedit.h
+        vendor/imgui/imstb_truetype.h
+        vendor/imgui/imgui.cpp
+        vendor/imgui/imgui_demo.cpp
+        vendor/imgui/imgui_draw.cpp
+        vendor/imgui/imgui_widgets.cpp
+        )
+
+target_link_libraries(imgui glad glfw)
+
+target_include_directories(imgui
+        PUBLIC
+        $<INSTALL_INTERFACE:imgui>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui>
+        )
+
 add_subdirectory(vendor/glm REQUIRED)
 add_subdirectory(vendor/stb_image)
 
